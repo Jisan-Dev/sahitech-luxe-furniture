@@ -50,7 +50,7 @@ export default function Testimonials() {
               className="bg-muted/30 rounded-lg p-8 hover:shadow-lg transition-shadow">
               <div className="flex gap-1 mb-4">
                 {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-accent text-accent" />
+                  <Star key={i} className="w-5 h-5 fill-neutral-600 text-neutral-600" />
                 ))}
               </div>
 

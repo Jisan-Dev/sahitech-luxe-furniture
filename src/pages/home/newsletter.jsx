@@ -32,7 +32,7 @@ export default function Newsletter() {
 
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+            className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto justify-center items-center">
             <Input
               type="email"
               placeholder="Enter your email"
@@ -41,13 +41,13 @@ export default function Newsletter() {
               required
               className="flex-1"
             />
-            <Button type="submit" size="lg" className="bg-accent hover:bg-accent/90">
+            <Button type="submit" size="lg">
               Subscribe
             </Button>
           </form>
 
           {subscribed && (
-            <p className="mt-4 text-accent font-semibold">Thank you for subscribing!</p>
+            <p className="mt-4 text-foreground/50 font-semibold">Thank you for subscribing!</p>
           )}
 
           <p className="text-xs text-muted-foreground mt-4">
