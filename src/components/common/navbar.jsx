@@ -1,6 +1,6 @@
 import { Menu, ShoppingCart, X } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -17,20 +17,34 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            <Link to="/" className="text-sm font-medium hover:text-primary transition-colors">
+          <div className="hidden md:flex items-center gap-4">
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                `text-sm font-medium hover:bg-accent transition-colors px-4 py-2 rounded-lg ${
+                  isActive && "bg-neutral-800 hover:bg-neutral-800 text-accent"
+                }`
+              }>
               Home
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               to="/products"
-              className="text-sm font-medium hover:text-primary transition-colors">
+              className={({ isActive }) =>
+                `text-sm font-medium hover:bg-accent transition-colors px-4 py-2 rounded-lg ${
+                  isActive && "bg-neutral-800 hover:bg-neutral-800 text-accent"
+                }`
+              }>
               Products
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               to="/contact"
-              className="text-sm font-medium hover:text-primary transition-colors">
+              className={({ isActive }) =>
+                `text-sm font-medium hover:bg-accent transition-colors px-4 py-2 rounded-lg ${
+                  isActive && "bg-neutral-800 hover:bg-neutral-800 text-accent"
+                }`
+              }>
               Contact
-            </Link>
+            </NavLink>
           </div>
 
           {/* Right Actions */}
