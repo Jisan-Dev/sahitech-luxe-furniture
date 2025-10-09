@@ -1,5 +1,5 @@
 import { products } from "@/lib/products-data";
-import ProductCard from "./product-card";
+import ProductCard from "../../components/common/product-card";
 
 export default function FeaturedProducts() {
   const featuredProducts = products.filter((p) => p.featured).slice(0, 4);

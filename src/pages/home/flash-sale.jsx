@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { products } from "@/lib/products-data";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import ProductCard from "./product-card";
+import ProductCard from "../../components/common/product-card";
 
 export default function FlashSale() {
   const saleProducts = products.filter((p) => p.sale).slice(0, 4);

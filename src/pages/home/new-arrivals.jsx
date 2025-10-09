@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { products } from "@/lib/products-data";
 import { Link } from "react-router";
-import ProductCard from "./product-card";
+import ProductCard from "../../components/common/product-card";
 
 export default function NewArrivals() {
   // Get the latest 4 products (simulating new arrivals)
