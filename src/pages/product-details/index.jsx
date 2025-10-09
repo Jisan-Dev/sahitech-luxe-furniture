@@ -62,7 +62,9 @@ export default function ProductDetails() {
             <div className="mb-6">
               {product.sale ? (
                 <div className="flex items-center gap-3">
-                  <span className="text-3xl font-bold text-accent">${product.salePrice}</span>
+                  <span className="text-3xl font-bold text-foreground/80">
+                    ${product.salePrice}
+                  </span>
                   <span className="text-xl text-muted-foreground line-through">
                     ${product.price}
                   </span>
@@ -104,7 +106,7 @@ export default function ProductDetails() {
 
             {/* Product Details */}
             <div className="mt-8 pt-8 border-t border-border">
-              <h3 className="font-semibold mb-4">Product Details</h3>
+              <h3 className="font-semibold mb-4">Product Features</h3>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>• Premium quality materials</li>
                 <li>• Expert craftsmanship</li>

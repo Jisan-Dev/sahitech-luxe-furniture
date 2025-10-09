@@ -27,6 +27,15 @@ export default function TrustBadges() {
   return (
     <section className="pt-16 pb-12 bg-background">
       <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
+            Trust With Every Piece
+          </h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto text-pretty">
+            Don't just take our word for it - hear from our satisfied customers
+          </p>
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {badges.map((badge, index) => {
             const Icon = badge.icon;
