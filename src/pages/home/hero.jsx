@@ -5,12 +5,12 @@ import { Link } from "react-router";
 export default function Hero() {
   return (
     <section className="relative bg-secondary overflow-hidden">
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 pb-16 pt-5">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
           <div className="space-y-8">
-            <div className="inline-block">
-              <span className="bg-accent text-accent-foreground text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide">
+            <div className="inline-block ">
+              <span className="bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide">
                 New Collection
               </span>
             </div>

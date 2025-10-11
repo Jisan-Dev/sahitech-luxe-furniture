@@ -67,24 +67,24 @@ export default function Navbar() {
         {mobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-border">
             <div className="flex flex-col gap-4">
-              <Link
-                href="/"
+              <NavLink
+                to="/"
                 className="text-sm font-medium hover:text-primary transition-colors"
                 onClick={() => setMobileMenuOpen(false)}>
                 Home
-              </Link>
-              <Link
-                href="/products"
+              </NavLink>
+              <NavLink
+                to="/products"
                 className="text-sm font-medium hover:text-primary transition-colors"
                 onClick={() => setMobileMenuOpen(false)}>
                 Products
-              </Link>
-              <Link
-                href="/contact"
+              </NavLink>
+              <NavLink
+                to="/contact"
                 className="text-sm font-medium hover:text-primary transition-colors"
                 onClick={() => setMobileMenuOpen(false)}>
                 Contact
-              </Link>
+              </NavLink>
             </div>
           </div>
         )}
