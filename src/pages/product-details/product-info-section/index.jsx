@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { ShoppingCart } from "lucide-react";
 import Heading from "./heading";
 import Price from "./price";
 import ProductFeatures from "./product-features";
