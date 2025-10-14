@@ -8,7 +8,27 @@ export const products = [
     description:
       "Luxurious velvet sofa with deep seating and elegant design. Perfect for contemporary living spaces.",
     featured: true,
+    rating: 5,
     sale: false,
+    reviews: [
+      {
+        id: 1,
+        author: "Jessica P.",
+        rating: 5,
+        title: "Absolutely in love!",
+        comment:
+          "This sofa is the centerpiece of my living room. It's so luxurious and comfortable. Worth every penny!",
+        date: "2023-03-15",
+      },
+      {
+        id: 2,
+        author: "Mark T.",
+        rating: 5,
+        title: "Stunning and high quality",
+        comment: "The velvet is so soft and the color is rich. It feels very sturdy and well-made.",
+        date: "2023-04-02",
+      },
+    ],
   },
   {
     id: 2,
@@ -19,7 +39,28 @@ export const products = [
     image: "/scandinavian-dining-chair.png",
     description: "Minimalist dining chair with solid wood legs and comfortable upholstered seat.",
     featured: true,
+    rating: 4,
     sale: true,
+    reviews: [
+      {
+        id: 1,
+        author: "Anna K.",
+        rating: 4,
+        title: "Stylish and functional",
+        comment:
+          "These chairs look great in my dining room. They are a bit firm but still comfortable for long dinners.",
+        date: "2023-05-20",
+      },
+      {
+        id: 2,
+        author: "David L.",
+        rating: 5,
+        title: "Great value for the price",
+        comment:
+          "Bought a set of 6 on sale. They were easy to assemble and look much more expensive than they were.",
+        date: "2023-05-22",
+      },
+    ],
   },
   {
     id: 3,
@@ -29,7 +70,19 @@ export const products = [
     image: "/marble-coffee-table.png",
     description: "Elegant coffee table featuring genuine marble top and brass-finished metal base.",
     featured: true,
+    rating: 5,
     sale: false,
+    reviews: [
+      {
+        id: 1,
+        author: "Sophie B.",
+        rating: 5,
+        title: "A showstopper!",
+        comment:
+          "This coffee table is gorgeous. The marble is beautiful and it's very heavy and stable. I get compliments on it all the time.",
+        date: "2023-02-10",
+      },
+    ],
   },
   {
     id: 4,
@@ -40,7 +93,27 @@ export const products = [
     description:
       "Sophisticated upholstered bed frame with tufted headboard and solid wood construction.",
     featured: true,
+    rating: 4,
     sale: false,
+    reviews: [
+      {
+        id: 1,
+        author: "Chris G.",
+        rating: 4,
+        title: "Very comfortable and looks great",
+        comment:
+          "The headboard is very comfortable to lean against. The only downside was that assembly took a while.",
+        date: "2023-06-01",
+      },
+      {
+        id: 2,
+        author: "Maria E.",
+        rating: 5,
+        title: "Feels like a luxury hotel bed",
+        comment: "I love this bed. It's so elegant and has completely transformed my bedroom.",
+        date: "2023-06-05",
+      },
+    ],
   },
   {
     id: 5,
@@ -52,7 +125,19 @@ export const products = [
     description:
       "Classic leather lounge chair with ottoman. Timeless design and premium materials.",
     featured: false,
+    rating: 5,
     sale: true,
+    reviews: [
+      {
+        id: 1,
+        author: "John D.",
+        rating: 5,
+        title: "My new favorite chair",
+        comment:
+          "Incredibly comfortable chair and ottoman. The leather is high quality and has a great feel. Perfect for my reading nook.",
+        date: "2023-01-25",
+      },
+    ],
   },
   {
     id: 6,
@@ -61,8 +146,20 @@ export const products = [
     price: 2199,
     image: "/modern-sectional-sofa.png",
     description: "Spacious L-shaped sectional with plush cushions and durable fabric upholstery.",
+    rating: 4,
     featured: false,
     sale: false,
+    reviews: [
+      {
+        id: 1,
+        author: "The Miller Family",
+        rating: 4,
+        title: "Great for movie nights",
+        comment:
+          "Lots of space for the whole family. The cushions are a bit firm at first but are breaking in nicely.",
+        date: "2023-04-18",
+      },
+    ],
   },
   {
     id: 7,
@@ -71,8 +168,20 @@ export const products = [
     price: 1299,
     image: "/rustic-oak-table.png",
     description: "Solid oak dining table with natural finish. Seats 6-8 people comfortably.",
+    rating: 5,
     featured: false,
     sale: false,
+    reviews: [
+      {
+        id: 1,
+        author: "Karen W.",
+        rating: 5,
+        title: "Beautiful and solid table",
+        comment:
+          "This table is a beast! It's incredibly solid and the oak grain is beautiful. Expect it to last for generations.",
+        date: "2023-03-30",
+      },
+    ],
   },
   {
     id: 8,
@@ -81,8 +190,20 @@ export const products = [
     price: 449,
     image: "/modern-accent-armchair.png",
     description: "Statement armchair with curved silhouette and luxurious fabric upholstery.",
+    rating: 4,
     featured: false,
     sale: false,
+    reviews: [
+      {
+        id: 1,
+        author: "Olivia R.",
+        rating: 4,
+        title: "Perfect pop of color",
+        comment:
+          "I got this in the teal color and it's a beautiful accent in my living room. It's more of a statement piece than a lounging chair, but it's comfortable enough.",
+        date: "2023-05-11",
+      },
+    ],
   },
   {
     id: 9,
@@ -92,8 +213,20 @@ export const products = [
     salePrice: 649,
     image: "/platform-bed-frame.jpg",
     description: "Low-profile platform bed with clean lines and integrated storage drawers.",
+    rating: 4,
     featured: false,
     sale: true,
+    reviews: [
+      {
+        id: 1,
+        author: "Ben S.",
+        rating: 4,
+        title: "Sleek and practical",
+        comment:
+          "Love the minimalist design and the storage drawers are a huge plus for a small apartment. It was a bit tricky to assemble alone.",
+        date: "2023-02-05",
+      },
+    ],
   },
   {
     id: 10,
@@ -103,8 +236,20 @@ export const products = [
     image: "/modern-console-table.jpg",
     description:
       "Sleek console table perfect for entryways. Features slim profile and metal frame.",
+    rating: 3,
     featured: false,
     sale: false,
+    reviews: [
+      {
+        id: 1,
+        author: "Anonymous",
+        rating: 3,
+        title: "It's okay",
+        comment:
+          "It does the job and looks fine, but it feels a bit wobbly. You get what you pay for.",
+        date: "2023-06-10",
+      },
+    ],
   },
   {
     id: 11,
@@ -112,9 +257,21 @@ export const products = [
     category: "Sofas",
     price: 1799,
     image: "/chesterfield-sofa.jpg",
+    rating: 5,
     description: "Classic Chesterfield sofa with deep button tufting and rolled arms.",
     featured: false,
     sale: false,
+    reviews: [
+      {
+        id: 1,
+        author: "Henry P.",
+        rating: 5,
+        title: "Timeless Classic",
+        comment:
+          "A truly iconic piece. It's the highlight of my study. The craftsmanship is superb.",
+        date: "2023-01-12",
+      },
+    ],
   },
   {
     id: 12,
@@ -122,9 +279,20 @@ export const products = [
     category: "Chairs",
     price: 349,
     image: "/modern-bar-stools.jpg",
+    rating: 4,
     description: "Set of 2 adjustable bar stools with swivel seats and footrests.",
     featured: false,
     sale: false,
+    reviews: [
+      {
+        id: 1,
+        author: "Chloe M.",
+        rating: 4,
+        title: "Great for our kitchen island",
+        comment: "Comfortable and they look great. The adjustable height is very convenient.",
+        date: "2023-04-25",
+      },
+    ],
   },
   {
     id: 13,
@@ -132,9 +300,21 @@ export const products = [
     category: "Tables",
     price: 899,
     image: "/mid-century-modern-wooden-sideboard-with-brass-han.jpg",
+    rating: 5,
     description: "Vintage-inspired sideboard with ample storage and iconic mid-century design.",
     featured: false,
     sale: false,
+    reviews: [
+      {
+        id: 1,
+        author: "Ethan J.",
+        rating: 5,
+        title: "Perfect for my record collection",
+        comment:
+          "This sideboard is exactly what I was looking for. Plenty of storage and the style is spot on.",
+        date: "2023-03-08",
+      },
+    ],
   },
   {
     id: 14,
@@ -144,8 +324,20 @@ export const products = [
     salePrice: 499,
     image: "/elegant-wingback-chair-in-velvet-fabric.jpg",
     description: "Classic wingback chair upholstered in premium velvet with nailhead trim.",
+    rating: 5,
     featured: false,
     sale: true,
+    reviews: [
+      {
+        id: 1,
+        author: "Grace L.",
+        rating: 5,
+        title: "So elegant!",
+        comment:
+          "This chair is even more beautiful in person. The velvet is so soft and it's surprisingly comfortable.",
+        date: "2023-05-01",
+      },
+    ],
   },
   {
     id: 15,
@@ -153,9 +345,21 @@ export const products = [
     category: "Beds",
     price: 2299,
     image: "/modern-four-poster-canopy-bed-frame.jpg",
+    rating: 4,
     description: "Dramatic four-poster canopy bed with clean lines and metal construction.",
     featured: false,
     sale: false,
+    reviews: [
+      {
+        id: 1,
+        author: "Fiona C.",
+        rating: 4,
+        title: "Makes a statement",
+        comment:
+          "This bed is a showstopper. It was a bit of a project to put together, but the end result is worth it.",
+        date: "2023-02-20",
+      },
+    ],
   },
   {
     id: 16,
@@ -163,9 +367,21 @@ export const products = [
     category: "Sofas",
     price: 899,
     image: "/compact-loveseat-sofa-in-neutral-fabric.jpg",
+    rating: 4,
     description: "Compact loveseat perfect for small spaces. Comfortable and stylish.",
     featured: false,
     sale: false,
+    reviews: [
+      {
+        id: 1,
+        author: "Daniel K.",
+        rating: 4,
+        title: "Perfect for my apartment",
+        comment:
+          "Fits perfectly in my small living room. It's comfortable for its size and looks great.",
+        date: "2023-04-12",
+      },
+    ],
   },
   {
     id: 17,
@@ -173,9 +389,21 @@ export const products = [
     category: "Tables",
     price: 449,
     image: "/set-of-nesting-coffee-tables-with-metal-frames.jpg",
+    rating: 5,
     description: "Set of 3 nesting tables with marble tops and gold-finished metal frames.",
     featured: false,
     sale: false,
+    reviews: [
+      {
+        id: 1,
+        author: "Isabella N.",
+        rating: 5,
+        title: "Versatile and chic",
+        comment:
+          "I love these tables. I use them as a coffee table, and then as side tables when I have guests. Very versatile and they look very high-end.",
+        date: "2023-03-18",
+      },
+    ],
   },
   {
     id: 18,
@@ -183,8 +411,19 @@ export const products = [
     category: "Chairs",
     price: 549,
     image: "/modern-rocking-chair-with-cushioned-seat.jpg",
+    rating: 4,
     description: "Contemporary rocking chair with ergonomic design and plush cushioning.",
     featured: false,
     sale: false,
+    reviews: [
+      {
+        id: 1,
+        author: "Liam O.",
+        rating: 4,
+        title: "Modern and comfortable",
+        comment: "A great modern take on a classic rocking chair. Very comfortable for relaxing.",
+        date: "2023-01-30",
+      },
+    ],
   },
 ];

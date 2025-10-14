@@ -1,4 +1,6 @@
+import { Star } from "lucide-react";
 import { Link } from "react-router";
+import { Badge } from "../ui/badge";
 
 export default function ProductCard({ product, showNewBadge = false }) {
   return (
@@ -23,23 +25,45 @@ export default function ProductCard({ product, showNewBadge = false }) {
         </div>
 
         <div className="p-4">
-          <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
+          {/* <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
             {product.category}
-          </p>
-          <h3 className="font-medium text-foreground mb-2 group-hover:text-primary transition-colors text-balance">
+          </p> */}
+          <Badge variant={"outline"} className="mb-2 tracking-wide text-muted-foreground text-xs">
+            {product.category}
+          </Badge>
+          <h3 className="font-semibold text-lg text-primary/80 mb-1 group-hover:text-primary transition-colors text-balance">
             {product.name}
           </h3>
+
+          <p className="text-sm text-muted-foreground mb-3 line-clamp-2">{product.description}</p>
+
+          <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star
+                  key={i}
+                  className={`w-4 h-4 ${
+                    i < Math.floor(1) ? "fill-primary/80 text-primary/80" : "text-muted-foreground"
+                  }`}
+                />
+              ))}
+            </div>
+            {/* <span className="text-xs text-muted-foreground">
+              ({product.reviews})
+            </span> */}
+          </div>
+
           <div className="flex items-center justify-between">
             <div>
               {product.sale ? (
                 <div className="flex items-center gap-2">
-                  <span className="font-bold text-foreground">${product.salePrice}</span>
+                  <span className="text-xl font-bold text-foreground">${product.salePrice}</span>
                   <span className="text-sm text-muted-foreground line-through">
                     ${product.price}
                   </span>
                 </div>
               ) : (
-                <span className="font-bold text-foreground">${product.price}</span>
+                <span className="text-xl font-bold text-foreground">${product.price}</span>
               )}
             </div>
           </div>
