@@ -37,7 +37,7 @@ export default function ProductCard({ product, showNewBadge = false }) {
             </div>
           )}
 
-          <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-5 gap-2 z-50">
+          <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-5 gap-2 z-50 max-lg:hidden">
             <Button
               size="icon"
               variant="secondary"
@@ -68,7 +68,7 @@ export default function ProductCard({ product, showNewBadge = false }) {
             <Badge variant={"outline"} className="mb-2 tracking-wide text-muted-foreground text-xs">
               {product.category}
             </Badge>
-            <h3 className="font-semibold text-lg text-primary/80 mb-1 group-hover:text-primary transition-colors text-balance">
+            <h3 className="font-semibold text-lg text-primary/90 mb-1 group-hover:text-primary transition-colors text-balance">
               {product.name}
             </h3>
 
