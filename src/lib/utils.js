@@ -21,3 +21,9 @@ export function onAddToFavorites(product) {
     },
   });
 }
+
+export function handleAddToCart(product) {
+  toast.success(`${product.name} added to cart!`, {
+    description: `Price: $${product.price}`,
+  });
+}
