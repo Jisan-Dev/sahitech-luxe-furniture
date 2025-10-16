@@ -1,9 +1,9 @@
 import { ExternalLink, Heart, ShoppingCart, Star } from "lucide-react";
 import { useNavigate } from "react-router";
-import { Badge } from "../ui/badge";
-import { Button } from "../ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
-import { Separator } from "../ui/separator";
+import { Badge } from "../../ui/badge";
+import { Button } from "../../ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../../ui/dialog";
+import { Separator } from "../../ui/separator";
 
 export default function ProductModal({
   open,
@@ -30,7 +30,7 @@ export default function ProductModal({
           <div className="relative aspect-square overflow-hidden rounded-lg bg-muted">
             <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
             {product.sale && (
-              <Badge className="absolute top-4 left-4 bg-destructive text-primary-foreground">
+              <Badge className="absolute top-2 left-2 bg-foreground/90 text-background !text-xs font-semibold">
                 Sale
               </Badge>
             )}
