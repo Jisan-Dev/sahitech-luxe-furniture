@@ -10,7 +10,54 @@ const CartProvider = ({ children }) => {
     setCart(handleAddToCart(product));
   };
 
-  const value = { cart, setCart, addToCart };
+  const reduceQuantity = (productId) => {
+    setCart((prevCart) => {
+      const updatedCart = prevCart.map((item) => {
+        if (item.id === productId) {
+          if (item.quantity > 1) {
+            return { ...item, quantity: item.quantity - 1 };
+          } else {
+            return item;
+          }
+        } else {
+          return item;
+        }
+      });
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      return updatedCart;
+    });
+  };
+
+  const removeFromCart = (productId) => {
+    setCart((prevCart) => {
+      const updatedCart = prevCart.filter((item) => item.id !== productId);
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      return updatedCart;
+    });
+  };
+
+  const updateCartItemQuantity = (productId, newQuantity) => {
+    setCart((prevCart) => {
+      const updatedCart = prevCart.map((item) => {
+        if (item.id === productId) {
+          return { ...item, quantity: newQuantity };
+        } else {
+          return item;
+        }
+      });
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      return updatedCart;
+    });
+  };
+
+  const value = {
+    cart,
+    setCart,
+    addToCart,
+    reduceQuantity,
+    removeFromCart,
+    updateCartItemQuantity,
+  };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };

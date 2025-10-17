@@ -1,38 +1,37 @@
 import { Button } from "@/components/ui/button";
+import { useCart } from "@/contexts/cart-context";
 import { Minus, Plus, Trash2 } from "lucide-react";
-import { useState } from "react";
 import { Link } from "react-router";
 
 // Mock cart data - in a real app, this would come from state management
-const initialCartItems = [
-  {
-    id: 1,
-    name: "Modern Velvet Sofa",
-    price: 1299,
-    quantity: 1,
-    image: "/modern-velvet-sofa.jpg",
-  },
-  {
-    id: 2,
-    name: "Scandinavian Dining Chair",
-    price: 199,
-    quantity: 4,
-    image: "/scandinavian-dining-chair.png",
-  },
-];
+// const initialCartItems = [
+//   {
+//     id: 1,
+//     name: "Modern Velvet Sofa",
+//     price: 1299,
+//     quantity: 1,
+//     image: "/modern-velvet-sofa.jpg",
+//   },
+//   {
+//     id: 2,
+//     name: "Scandinavian Dining Chair",
+//     price: 199,
+//     quantity: 4,
+//     image: "/scandinavian-dining-chair.png",
+//   },
+// ];
 
 export default function CartPage() {
-  const [cartItems, setCartItems] = useState(initialCartItems);
+  // const [cartItems, setCartItems] = useState(initialCartItems);
+  const { cart: cartItems, updateCartItemQuantity, removeFromCart } = useCart();
 
   const updateQuantity = (id, newQuantity) => {
     if (newQuantity < 1) return;
-    setCartItems((items) =>
-      items.map((item) => (item.id === id ? { ...item, quantity: newQuantity } : item))
-    );
+    updateCartItemQuantity(id, newQuantity);
   };
 
   const removeItem = (id) => {
-    setCartItems((items) => items.filter((item) => item.id !== id));
+    removeFromCart(id);
   };
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
