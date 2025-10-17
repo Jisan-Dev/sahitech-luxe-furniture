@@ -23,7 +23,14 @@ export function onAddToFavorites(product) {
 }
 
 export function handleAddToCart(product) {
-  toast.success(`${product.name} added to cart!`, {
-    description: `Price: $${product.price}`,
-  });
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const existingProductIndex = cart.findIndex((item) => item.id === product.id);
+
+  if (existingProductIndex !== -1) {
+    cart[existingProductIndex].quantity += 1;
+    localStorage.setItem("cart", JSON.stringify(cart));
+    toast.success(`${product.name} added to cart!`, {
+      description: `Price: $${product.price}`,
+    });
+  }
 }
