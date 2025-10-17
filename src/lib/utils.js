@@ -28,9 +28,12 @@ export function handleAddToCart(product) {
 
   if (existingProductIndex !== -1) {
     cart[existingProductIndex].quantity += 1;
-    localStorage.setItem("cart", JSON.stringify(cart));
-    toast.success(`${product.name} added to cart!`, {
-      description: `Price: $${product.price}`,
-    });
+  } else {
+    cart.push({ ...product, quantity: 1 });
   }
+  localStorage.setItem("cart", JSON.stringify(cart));
+  toast.success(`${product.name} added to cart!`, {
+    description: `Price: $${product.price}`,
+  });
+  return cart;
 }

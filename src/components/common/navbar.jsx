@@ -1,10 +1,13 @@
+import { useCart } from "@/contexts/cart-context";
 import { Menu, ShoppingCart, X } from "lucide-react";
 import { useState } from "react";
 import { Link, NavLink } from "react-router";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const { cart } = useCart();
+
+  const totalItemsInCart = cart.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b border-border">
@@ -53,7 +56,7 @@ export default function Navbar() {
             <Link to="/cart" className="relative">
               <ShoppingCart className="h-5 w-5 text-foreground hover:text-primary transition-colors" />
               <span className="absolute -top-2 -right-2 bg-accent text-accent-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
-                {cart.length}
+                {totalItemsInCart}
               </span>
             </Link>
 

@@ -1,4 +1,5 @@
-import { handleAddToCart, onAddToFavorites } from "@/lib/utils";
+import { useCart } from "@/contexts/cart-context";
+import { onAddToFavorites } from "@/lib/utils";
 import { useState } from "react";
 import ProductCardBody from "./product-card-body";
 import ProductCardFooter from "./product-card-footer";
@@ -8,6 +9,7 @@ import ProductModal from "./product-modal";
 export default function ProductCard({ product, showNewBadge = false }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { addToCart } = useCart();
 
   const handleAddToFavorites = () => {
     setIsFavorite(!isFavorite);
@@ -28,13 +30,13 @@ export default function ProductCard({ product, showNewBadge = false }) {
 
           <ProductCardBody product={product} />
 
-          <ProductCardFooter product={product} onAddToCart={handleAddToCart} />
+          <ProductCardFooter product={product} onAddToCart={addToCart} />
         </div>
       </div>
 
       <ProductModal
         onAddToFavorites={handleAddToFavorites}
-        onAddToCart={handleAddToCart}
+        onAddToCart={addToCart}
         onOpenChange={setIsModalOpen}
         open={isModalOpen}
         product={product}
