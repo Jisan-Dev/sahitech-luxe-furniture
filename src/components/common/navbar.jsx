@@ -41,6 +41,15 @@ export default function Navbar() {
               Products
             </NavLink>
             <NavLink
+              to="/about-us"
+              className={({ isActive }) =>
+                `text-sm font-medium hover:bg-accent transition-colors px-4 py-2 rounded-lg ${
+                  isActive && "bg-neutral-800 hover:bg-neutral-800 text-accent"
+                }`
+              }>
+              About Us
+            </NavLink>
+            <NavLink
               to="/contact"
               className={({ isActive }) =>
                 `text-sm font-medium hover:bg-accent transition-colors px-4 py-2 rounded-lg ${
@@ -82,6 +91,12 @@ export default function Navbar() {
                 className="text-sm font-medium hover:text-primary transition-colors"
                 onClick={() => setMobileMenuOpen(false)}>
                 Products
+              </NavLink>
+              <NavLink
+                to="/about-us"
+                className="text-sm font-medium hover:text-primary transition-colors"
+                onClick={() => setMobileMenuOpen(false)}>
+                About Us
               </NavLink>
               <NavLink
                 to="/contact"
