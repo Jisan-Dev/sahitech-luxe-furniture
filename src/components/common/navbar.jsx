@@ -2,6 +2,7 @@ import { useCart } from "@/contexts/cart-context";
 import { Menu, ShoppingCart, X } from "lucide-react";
 import { useState } from "react";
 import { Link, NavLink } from "react-router";
+import { Button } from "../ui/button";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -67,6 +68,12 @@ export default function Navbar() {
               <span className="absolute -top-2 -right-2 bg-accent text-accent-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
                 {totalItemsInCart}
               </span>
+            </Link>
+
+            <Link to={"sign-in"}>
+              <Button variant="outline" to="/sign-in">
+                Sign Up
+              </Button>
             </Link>
 
             {/* Mobile Menu Button */}
