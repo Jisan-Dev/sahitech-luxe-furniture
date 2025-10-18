@@ -1,12 +1,12 @@
 import { createBrowserRouter } from "react-router";
 import Main from "./layouts/main";
 import AboutPage from "./pages/about-us";
+import SignUpPage from "./pages/auth/sign-up";
 import CartPage from "./pages/cart";
 import ContactPage from "./pages/contact";
 import Homepage from "./pages/home";
 import ProductDetails from "./pages/product-details";
 import ProductsPage from "./pages/products";
-import Register from "./pages/sign-up/Register";
 
 const router = createBrowserRouter([
   {
@@ -39,7 +39,17 @@ const router = createBrowserRouter([
       },
       {
         path: "sign-up",
-        element: <Register />,
+        element: <SignUpPage />,
+      },
+    ],
+  },
+  {
+    // auth related routes can go here
+    path: "/auth",
+    children: [
+      {
+        path: "sign-up",
+        element: <SignUpPage />,
       },
     ],
   },
