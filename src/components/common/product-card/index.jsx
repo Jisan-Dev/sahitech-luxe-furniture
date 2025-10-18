@@ -30,7 +30,11 @@ export default function ProductCard({ product, showNewBadge = false }) {
 
           <ProductCardBody product={product} />
 
-          <ProductCardFooter product={product} onAddToCart={addToCart} />
+          <ProductCardFooter
+            product={product}
+            onAddToCart={addToCart}
+            setIsModalOpen={setIsModalOpen}
+          />
         </div>
       </div>
 

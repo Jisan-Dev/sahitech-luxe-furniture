@@ -1,8 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { ShoppingCart } from "lucide-react";
-import { Link } from "react-router";
+import { Eye, ShoppingCart } from "lucide-react";
 
-export default function ProductCardFooter({ product, onAddToCart }) {
+export default function ProductCardFooter({ product, onAddToCart, setIsModalOpen }) {
   return (
     <div className="p-4 pt-0 flex gap-2">
       <Button
@@ -14,9 +13,14 @@ export default function ProductCardFooter({ product, onAddToCart }) {
         Add to Cart
         {/* {product?.inStock ? "Add to Cart" : "Out of Stock"} */}
       </Button>
-      <Link to={`/products/${product.id}`}>
-        <Button variant="outline">View</Button>
-      </Link>
+
+      <Button
+        onClick={() => setIsModalOpen(true)}
+        variant="outline"
+        className={"text-sm font-medium"}>
+        View
+        <Eye />
+      </Button>
     </div>
   );
 }

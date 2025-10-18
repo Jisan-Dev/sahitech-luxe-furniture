@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Eye, Heart } from "lucide-react";
+import { Link } from "react-router";
 
 export default function ProductCardHeader({
   product,
@@ -7,15 +8,18 @@ export default function ProductCardHeader({
   setIsModalOpen,
   onAddToFavorites,
   isFavorite,
+  overlayOnImg = false,
 }) {
   return (
     <>
       <div className="relative aspect-square overflow-hidden bg-muted">
-        <img
-          src={product.image || "/placeholder.svg"}
-          alt={product.name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-        />
+        <Link to={`/products/${product.id}`}>
+          <img
+            src={product.image || "/placeholder.svg"}
+            alt={product.name}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+        </Link>
         {product.sale && (
           <div className="absolute top-3 right-3 bg-accent text-accent-foreground text-xs font-semibold px-2 py-1 rounded">
             SALE
@@ -27,26 +31,28 @@ export default function ProductCardHeader({
           </div>
         )}
 
-        <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-5 gap-2 z-50 max-lg:hidden">
-          <Button
-            size="icon"
-            variant="secondary"
-            className="rounded-full shadow-md"
-            onClick={() => setIsModalOpen(true)}>
-            <Eye className="w-4 h-4" />
-          </Button>
-          <Button
-            size="icon"
-            variant="secondary"
-            className="rounded-full shadow-md"
-            onClick={onAddToFavorites}>
-            <Heart
-              className={`w-4 h-4 transition-colors ${
-                isFavorite ? "fill-destructive text-destructive" : ""
-              }`}
-            />
-          </Button>
-        </div>
+        {overlayOnImg && (
+          <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-5 gap-2 z-50 max-lg:hidden">
+            <Button
+              size="icon"
+              variant="secondary"
+              className="rounded-full shadow-md"
+              onClick={() => setIsModalOpen(true)}>
+              <Eye className="w-4 h-4" />
+            </Button>
+            <Button
+              size="icon"
+              variant="secondary"
+              className="rounded-full shadow-md"
+              onClick={onAddToFavorites}>
+              <Heart
+                className={`w-4 h-4 transition-colors ${
+                  isFavorite ? "fill-destructive text-destructive" : ""
+                }`}
+              />
+            </Button>
+          </div>
+        )}
       </div>
     </>
   );
