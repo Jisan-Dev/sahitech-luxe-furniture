@@ -4,13 +4,10 @@ import { useState } from "react";
 import { Link } from "react-router";
 import { toast } from "sonner";
 
-export default function SignUpPage() {
+export default function SigninPage() {
   const [formData, setFormData] = useState({
-    name: "",
     email: "",
-    phone: "",
     password: "",
-    confirmPassword: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -20,15 +17,10 @@ export default function SignUpPage() {
       ...formData,
       [e.target.name]: e.target.value,
     });
-    validateForm();
   };
 
   const validateForm = () => {
     const newErrors = {};
-
-    if (!formData.name.trim()) {
-      newErrors.name = "Name is required";
-    }
 
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
@@ -36,20 +28,8 @@ export default function SignUpPage() {
       newErrors.email = "Please enter a valid email";
     }
 
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Phone number is required";
-    } else if (!/^\d{10,}$/.test(formData.phone.replace(/\D/g, ""))) {
-      newErrors.phone = "Please enter a valid phone number";
-    }
-
     if (!formData.password) {
       newErrors.password = "Password is required";
-    } else if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match";
     }
 
     return newErrors;
@@ -61,13 +41,10 @@ export default function SignUpPage() {
 
     if (Object.keys(newErrors).length === 0) {
       console.log("Form submitted:", formData);
-      toast.success("Account created successfully! Welcome to Luxe Furniture.");
+      toast.success("Welcome back! logged in successfully.");
       setFormData({
-        name: "",
         email: "",
-        phone: "",
         password: "",
-        confirmPassword: "",
       });
       setErrors({});
     } else {
@@ -81,30 +58,13 @@ export default function SignUpPage() {
         <div className="max-w-md mx-auto">
           <div className="text-center mb-8">
             <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-2">
-              Create Account
+              Welcome Back
             </h1>
-            <p className="text-muted-foreground">Join us and start shopping premium furniture</p>
+            <p className="text-muted-foreground">Log in to your Luxe Furniture account</p>
           </div>
 
           <div className="bg-card border border-border rounded-lg p-6 md:p-8">
             <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Name Field */}
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium mb-2">
-                  Full Name
-                </label>
-                <Input
-                  id="name"
-                  name="name"
-                  type="text"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="John Doe"
-                  className={errors.name ? "border-destructive" : ""}
-                />
-                {errors.name && <p className="text-xs text-destructive mt-1">{errors.name}</p>}
-              </div>
-
               {/* Email Field */}
               <div>
                 <label htmlFor="email" className="block text-sm font-medium mb-2">
@@ -120,23 +80,6 @@ export default function SignUpPage() {
                   className={errors.email ? "border-destructive" : ""}
                 />
                 {errors.email && <p className="text-xs text-destructive mt-1">{errors.email}</p>}
-              </div>
-
-              {/* Phone Field */}
-              <div>
-                <label htmlFor="phone" className="block text-sm font-medium mb-2">
-                  Phone Number
-                </label>
-                <Input
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  placeholder="(555) 123-4567"
-                  className={errors.phone ? "border-destructive" : ""}
-                />
-                {errors.phone && <p className="text-xs text-destructive mt-1">{errors.phone}</p>}
               </div>
 
               {/* Password Field */}
@@ -158,37 +101,25 @@ export default function SignUpPage() {
                 )}
               </div>
 
-              {/* Confirm Password Field */}
-              <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium mb-2">
-                  Confirm Password
-                </label>
-                <Input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type="password"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  placeholder="••••••••"
-                  className={errors.confirmPassword ? "border-destructive" : ""}
-                />
-                {errors.confirmPassword && (
-                  <p className="text-xs text-destructive mt-1">{errors.confirmPassword}</p>
-                )}
+              {/* Forgot Password Link */}
+              <div className="text-right">
+                <Link href="#" className="text-sm text-primary hover:underline">
+                  Forgot password?
+                </Link>
               </div>
 
               {/* Submit Button */}
               <Button type="submit" size="lg" className="w-full mt-6">
-                Create Account
+                Sign In
               </Button>
             </form>
 
-            {/* Login Link */}
+            {/* Sign Up Link */}
             <div className="mt-6 text-center">
               <p className="text-sm text-muted-foreground">
-                Already have an account?{" "}
-                <Link to="/sign-in" className="text-primary font-medium hover:underline">
-                  Log in
+                Don't have an account?{" "}
+                <Link to="/sign-up" className="text-primary font-medium hover:underline">
+                  Sign up
                 </Link>
               </p>
             </div>

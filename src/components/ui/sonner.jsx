@@ -16,7 +16,7 @@ const Toaster = ({ ...props }) => {
       theme={theme}
       className="toaster group"
       icons={{
-        success: <CircleCheckIcon fill="#008a2e" color="white" className="size-6" />,
+        success: <CircleCheckIcon fill="#008a2e" color="white" className="size-5" />,
         info: <InfoIcon className="size-4" />,
         warning: <TriangleAlertIcon className="size-4" />,
         error: <OctagonXIcon className="size-4" />,
