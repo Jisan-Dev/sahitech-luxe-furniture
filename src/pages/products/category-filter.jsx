@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 
 export default function CategoryFilter({ categories, selectedCategory, setSelectedCategory }) {
   return (
-    <div className="mb-8 flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-2">
       {categories.map((category) => (
         <Button
           key={category}
