@@ -16,11 +16,10 @@ export default function SignUpPage() {
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
+    setFormData((prevFormData) => ({
+      ...prevFormData,
       [e.target.name]: e.target.value,
-    });
-    validateForm();
+    }));
   };
 
   const validateForm = () => {
@@ -28,6 +27,8 @@ export default function SignUpPage() {
 
     if (!formData.name.trim()) {
       newErrors.name = "Name is required";
+    } else {
+      delete newErrors.name;
     }
 
     if (!formData.email.trim()) {
