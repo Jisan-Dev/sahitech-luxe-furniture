@@ -51,6 +51,8 @@ export const getAllProducts = async (req, res) => {
     res.json({
       success: true,
       count: products?.length,
+      totalPages: Math.ceil(products?.length / Number(limit)),
+      currentPage: Number(page),
       data: products,
     });
   } catch (error) {
