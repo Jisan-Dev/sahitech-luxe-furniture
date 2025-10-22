@@ -36,7 +36,8 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log("MongoDB connection error: ", err));
 
-//Routes
+//!=======> Routes <==============
+// health check
 app.get("/health", (_req, res) => {
   res.send("API is running...");
 });

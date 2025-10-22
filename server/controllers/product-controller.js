@@ -1,3 +1,4 @@
+import Category from "../models/category.js";
 import Product from "../models/product.js";
 
 // Get all products with optional filters
@@ -59,6 +60,24 @@ export const getAllProducts = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Error fetching products",
+      error: error.message,
+    });
+  }
+};
+
+// Get a product by ID
+export const getProductById = async (req, res) => {
+  Category;
+  try {
+    const product = await Product.findById(req.params.id).populate("category");
+
+    if (!product) return res.status(404).json({ success: false, message: "Product not found!" });
+
+    res.json({ success: true, data: product });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error fetching product",
       error: error.message,
     });
   }
