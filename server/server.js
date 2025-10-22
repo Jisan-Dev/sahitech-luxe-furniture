@@ -1,18 +1,23 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
-import mongoSanitize from "express-mongo-sanitize";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
 import mongoose from "mongoose";
+import productRouter from "./routes/productRoutes.js";
 dotenv.config();
 
 const app = express();
 
 // Security Middlewares
 app.use(helmet());
-app.use(cors());
-app.use(mongoSanitize());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    credentials: true,
+  })
+);
+// app.use(mongoSanitize());
 
 // Rate Limiting
 const limiter = rateLimit({
@@ -35,6 +40,8 @@ mongoose
 app.get("/health", (_req, res) => {
   res.send("API is running...");
 });
+// Product routes
+app.use("/api/products", productRouter);
 
 // Error handling
 app.use((err, _req, res, _next) => {
