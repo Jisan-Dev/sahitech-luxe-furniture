@@ -40,18 +40,13 @@ export const getAllProducts = async (req, res) => {
 
     if (search) sortOption.score = { $meta: "textScore" };
 
-    let products;
-    if (search) {
-      products = await Product.find(query, { score: { $meta: "textScore" } })
-        .sort(sortOption)
-        .limit(Number(limit))
-        .skip((Number(page) - 1) * Number(limit));
-    } else {
-      products = await Product.find(query)
-        .sort(sortOption)
-        .limit(Number(limit))
-        .skip((Number(page) - 1) * Number(limit));
-    }
+    let projection = search ? { score: { $meta: "textScore" } } : {};
+    const products = await Product.find(query, projection)
+      .sort(sortOption)
+      .limit(Number(limit))
+      .skip((Number(page) - 1) * Number(limit));
+
+    // const count =
 
     res.json({
       success: true,

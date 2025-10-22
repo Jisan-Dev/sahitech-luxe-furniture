@@ -10,7 +10,7 @@ export const products = [
       "Luxurious velvet sofa with deep seating and elegant design. Perfect for contemporary living spaces.",
     price: 1299,
     category: {
-      $oid: "68f7f0e21b49704e6f013d9d",
+      $oid: "68f9316c3ca36c541e33ac0d",
     },
     images: [
       {
@@ -30,7 +30,7 @@ export const products = [
     price: 249,
     salePrice: 199,
     category: {
-      $oid: "68f7f0e21b49704e6f013d9e",
+      $oid: "68f9316c3ca36c541e33ac0e",
     },
     images: [
       {
@@ -49,7 +49,7 @@ export const products = [
     description: "Elegant coffee table featuring genuine marble top and brass-finished metal base.",
     price: 599,
     category: {
-      $oid: "68f7f0e21b49704e6f013d9f",
+      $oid: "68f9316c3ca36c541e33ac0f",
     },
     images: [
       {
@@ -69,7 +69,7 @@ export const products = [
       "Sophisticated upholstered bed frame with tufted headboard and solid wood construction.",
     price: 1899,
     category: {
-      $oid: "68f7f0e21b49704e6f013da0",
+      $oid: "68f9316c3ca36c541e33ac10",
     },
     images: [
       {
@@ -90,7 +90,7 @@ export const products = [
     price: 899,
     salePrice: 699,
     category: {
-      $oid: "68f7f0e21b49704e6f013d9e",
+      $oid: "68f9316c3ca36c541e33ac0e",
     },
     images: [
       {
@@ -109,7 +109,7 @@ export const products = [
     description: "Spacious L-shaped sectional with plush cushions and durable fabric upholstery.",
     price: 2199,
     category: {
-      $oid: "68f7f0e21b49704e6f013d9d",
+      $oid: "68f9316c3ca36c541e33ac0d",
     },
     images: [
       {
@@ -128,7 +128,7 @@ export const products = [
     description: "Solid oak dining table with natural finish. Seats 6-8 people comfortably.",
     price: 1299,
     category: {
-      $oid: "68f7f0e21b49704e6f013d9f",
+      $oid: "68f9316c3ca36c541e33ac0f",
     },
     images: [
       {
@@ -147,7 +147,7 @@ export const products = [
     description: "Statement armchair with curved silhouette and luxurious fabric upholstery.",
     price: 449,
     category: {
-      $oid: "68f7f0e21b49704e6f013d9e",
+      $oid: "68f9316c3ca36c541e33ac0e",
     },
     images: [
       {
@@ -167,7 +167,7 @@ export const products = [
     price: 799,
     salePrice: 649,
     category: {
-      $oid: "68f7f0e21b49704e6f013da0",
+      $oid: "68f9316c3ca36c541e33ac10",
     },
     images: [
       {
@@ -187,7 +187,7 @@ export const products = [
       "Sleek console table perfect for entryways. Features slim profile and metal frame.",
     price: 399,
     category: {
-      $oid: "68f7f0e21b49704e6f013d9f",
+      $oid: "68f9316c3ca36c541e33ac0f",
     },
     images: [
       {
@@ -206,7 +206,7 @@ export const products = [
     description: "Classic Chesterfield sofa with deep button tufting and rolled arms.",
     price: 1799,
     category: {
-      $oid: "68f7f0e21b49704e6f013d9d",
+      $oid: "68f9316c3ca36c541e33ac0d",
     },
     images: [
       {
@@ -225,7 +225,7 @@ export const products = [
     description: "Set of 2 adjustable bar stools with swivel seats and footrests.",
     price: 349,
     category: {
-      $oid: "68f7f0e21b49704e6f013d9e",
+      $oid: "68f9316c3ca36c541e33ac0e",
     },
     images: [
       {
@@ -240,31 +240,12 @@ export const products = [
     inSale: false,
   },
   {
-    name: "Mid-Century Sideboard",
-    description: "Vintage-inspired sideboard with ample storage and iconic mid-century design.",
-    price: 899,
-    category: {
-      $oid: "68f7f0e21b49704e6f013d9f",
-    },
-    images: [
-      {
-        url: "/mid-century-modern-wooden-sideboard-with-brass-han.jpg",
-        alt: "Mid-Century Sideboard",
-      },
-    ],
-    stock: 25,
-    rating: 5,
-    numReviews: 1,
-    isFeatured: false,
-    inSale: false,
-  },
-  {
     name: "Wingback Accent Chair",
     description: "Classic wingback chair upholstered in premium velvet with nailhead trim.",
     price: 649,
     salePrice: 499,
     category: {
-      $oid: "68f7f0e21b49704e6f013d9e",
+      $oid: "68f9316c3ca36c541e33ac0e",
     },
     images: [
       {
@@ -283,7 +264,7 @@ export const products = [
     description: "Dramatic four-poster canopy bed with clean lines and metal construction.",
     price: 2299,
     category: {
-      $oid: "68f7f0e21b49704e6f013da0",
+      $oid: "68f9316c3ca36c541e33ac10",
     },
     images: [
       {
@@ -302,7 +283,7 @@ export const products = [
     description: "Compact loveseat perfect for small spaces. Comfortable and stylish.",
     price: 899,
     category: {
-      $oid: "68f7f0e21b49704e6f013d9d",
+      $oid: "68f9316c3ca36c541e33ac0d",
     },
     images: [
       {
@@ -321,7 +302,7 @@ export const products = [
     description: "Set of 3 nesting tables with marble tops and gold-finished metal frames.",
     price: 449,
     category: {
-      $oid: "68f7f0e21b49704e6f013d9f",
+      $oid: "68f9316c3ca36c541e33ac0f",
     },
     images: [
       {
@@ -340,7 +321,7 @@ export const products = [
     description: "Contemporary rocking chair with ergonomic design and plush cushioning.",
     price: 549,
     category: {
-      $oid: "68f7f0e21b49704e6f013d9e",
+      $oid: "68f9316c3ca36c541e33ac0e",
     },
     images: [
       {
