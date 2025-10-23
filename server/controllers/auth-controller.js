@@ -23,3 +23,43 @@ export const createUser = async (req, res) => {
     res.status(500).json({ success: false, message: error.message || "Error creating user" });
   }
 };
+
+export const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ success: false, message: "Please provide email and password" });
+    }
+
+    const user = await User.findOne({ email }).select("+password");
+    if (!user || !(await user.comparePassword)) {
+      return res.status(401).json({ success: false, message: "Invalid credentials" });
+    }
+
+    if (!user.isActive) {
+      return res.status(401).json({ success: false, message: "Account is inactive" });
+    }
+
+    res.json({
+      success: true,
+      data: {
+        success: true,
+        token,
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+        },
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: error.message || "Error logging in" });
+  }
+};
+
+export const getUser = async (req, res) => {
+  res.json({ success: true, data: req.user });
+};
