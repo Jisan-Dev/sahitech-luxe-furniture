@@ -1,4 +1,3 @@
-import Category from "../models/category.js";
 import Product from "../models/product.js";
 
 // Get all products with optional filters
@@ -67,7 +66,6 @@ export const getAllProducts = async (req, res) => {
 
 // Get a product by ID
 export const getProductById = async (req, res) => {
-  Category;
   try {
     const product = await Product.findById(req.params.id).populate("category");
 

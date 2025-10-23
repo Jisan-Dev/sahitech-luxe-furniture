@@ -4,6 +4,7 @@ import express from "express";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
 import mongoose from "mongoose";
+import categoryRouter from "./routes/categoryRoutes.js";
 import productRouter from "./routes/productRoutes.js";
 dotenv.config();
 
@@ -43,6 +44,7 @@ app.get("/health", (_req, res) => {
 });
 // Product routes
 app.use("/api/products", productRouter);
+app.use("/api/categories", categoryRouter);
 
 // Error handling
 app.use((err, _req, res, _next) => {
