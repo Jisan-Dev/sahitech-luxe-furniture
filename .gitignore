@@ -26,3 +26,4 @@ dist-ssr
 .env
 luxe-furniture-demo-v0Ai
 ecommerce-backend.js
+auth-controller.js
