@@ -13,19 +13,20 @@ export default function ProductCardHeader({
   return (
     <>
       <div className="relative aspect-square overflow-hidden bg-muted">
-        <Link to={`/products/${product.id}`}>
+        <Link to={`/products/${product._id}`}>
           <img
-            src={product.image || "/placeholder.svg"}
+            src={product.images[0].url || "/placeholder.svg"}
+            // src={"/king-size-bed-upholstered-headboard.jpg"}
             alt={product.name}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
         </Link>
-        {product.sale && (
+        {product.inSale && (
           <div className="absolute top-3 right-3 bg-accent text-accent-foreground text-xs font-semibold px-2 py-1 rounded">
             SALE
           </div>
         )}
-        {showNewBadge && !product.sale && (
+        {showNewBadge && !product.inSale && (
           <div className="absolute top-3 right-3 bg-primary text-primary-foreground text-xs font-semibold px-2 py-1 rounded">
             NEW
           </div>

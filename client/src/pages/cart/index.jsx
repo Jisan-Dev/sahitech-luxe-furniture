@@ -69,7 +69,7 @@ export default function CartPage() {
             {cartItems.map((item) => (
               <div key={item.id} className="bg-card border border-border rounded-lg p-4 flex gap-4">
                 <img
-                  src={item.image || "/placeholder.svg"}
+                  src={item.images[0].url || "/placeholder.svg"}
                   alt={item.name}
                   className="w-24 h-24 object-cover rounded"
                 />
@@ -82,21 +82,21 @@ export default function CartPage() {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => updateQuantity(item.id, item.quantity - 1)}>
+                      onClick={() => updateQuantity(item._id, item.quantity - 1)}>
                       <Minus className="h-3 w-3" />
                     </Button>
                     <span className="w-8 text-center font-medium">{item.quantity}</span>
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}>
+                      onClick={() => updateQuantity(item._id, item.quantity + 1)}>
                       <Plus className="h-3 w-3" />
                     </Button>
                   </div>
                 </div>
 
                 <div className="flex flex-col items-end justify-between">
-                  <Button variant="ghost" size="sm" onClick={() => removeItem(item.id)}>
+                  <Button variant="ghost" size="sm" onClick={() => removeItem(item._id)}>
                     <Trash2 className="h-4 w-4 text-muted-foreground hover:text-accent" />
                   </Button>
                   <p className="font-bold">${item.price * item.quantity}</p>
@@ -133,9 +133,11 @@ export default function CartPage() {
                 </div>
               </div>
 
-              <Button size="lg" className="w-full mb-3">
-                Proceed to Checkout
-              </Button>
+              <Link to="/checkout">
+                <Button size="lg" className="w-full mb-3">
+                  Proceed to Checkout
+                </Button>
+              </Link>
 
               <Link href="/products">
                 <Button variant="outline" size="lg" className="w-full bg-transparent">

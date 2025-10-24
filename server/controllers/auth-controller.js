@@ -8,7 +8,7 @@ export const createUser = async (req, res) => {
       return res.status(400).json({ success: false, message: "User already exists!" });
 
     const newUser = await User.create({ email, phone, name, password });
-    const token = user.getSignedJwtToken();
+    const token = newUser.getSignedJwtToken();
 
     const user = {
       id: newUser._id,
@@ -20,6 +20,7 @@ export const createUser = async (req, res) => {
 
     res.status(201).json({ success: true, token, data: user });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ success: false, message: error.message || "Error creating user" });
   }
 };

@@ -1,12 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { products } from "@/lib/products-data";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import ProductCard from "../../components/common/product-card";
 
-export default function FlashSale() {
-  const saleProducts = products.filter((p) => p.sale).slice(0, 4);
-
+export default function FlashSale({ products }) {
   // Countdown timer (24 hours from now)
   const [timeLeft, setTimeLeft] = useState({
     hours: 23,
@@ -75,8 +72,8 @@ export default function FlashSale() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {saleProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
+          {products?.map((product) => (
+            <ProductCard key={product._id} product={product} />
           ))}
         </div>
 

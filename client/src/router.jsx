@@ -4,6 +4,7 @@ import AboutPage from "./pages/about-us";
 import SigninPage from "./pages/auth/sign-in";
 import SignUpPage from "./pages/auth/sign-up";
 import CartPage from "./pages/cart";
+import Checkout from "./pages/checkout";
 import ContactPage from "./pages/contact";
 import Homepage from "./pages/home";
 import ProductDetails from "./pages/product-details";
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "sign-in",
         element: <SigninPage />,
+      },
+      {
+        path: "checkout",
+        element: <Checkout />,
       },
     ],
   },

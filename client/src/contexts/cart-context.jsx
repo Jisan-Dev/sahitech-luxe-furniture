@@ -13,7 +13,7 @@ const CartProvider = ({ children }) => {
   const reduceQuantity = (productId) => {
     setCart((prevCart) => {
       const updatedCart = prevCart.map((item) => {
-        if (item.id === productId) {
+        if (item._id === productId) {
           if (item.quantity > 1) {
             return { ...item, quantity: item.quantity - 1 };
           } else {
@@ -30,7 +30,7 @@ const CartProvider = ({ children }) => {
 
   const removeFromCart = (productId) => {
     setCart((prevCart) => {
-      const updatedCart = prevCart.filter((item) => item.id !== productId);
+      const updatedCart = prevCart.filter((item) => item._id !== productId);
       localStorage.setItem("cart", JSON.stringify(updatedCart));
       return updatedCart;
     });
@@ -39,7 +39,7 @@ const CartProvider = ({ children }) => {
   const updateCartItemQuantity = (productId, newQuantity) => {
     setCart((prevCart) => {
       const updatedCart = prevCart.map((item) => {
-        if (item.id === productId) {
+        if (item._id === productId) {
           return { ...item, quantity: newQuantity };
         } else {
           return item;

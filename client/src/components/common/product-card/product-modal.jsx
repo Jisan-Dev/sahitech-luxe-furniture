@@ -16,7 +16,7 @@ export default function ProductModal({
 
   const handleViewDetails = () => {
     onOpenChange?.(false);
-    navigate(`/products/${product.id}`);
+    navigate(`/products/${product._id}`);
   };
 
   return (
@@ -28,8 +28,12 @@ export default function ProductModal({
 
         <div className="grid md:grid-cols-2 gap-8">
           <div className="relative aspect-square overflow-hidden rounded-lg bg-muted">
-            <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
-            {product.sale && (
+            <img
+              src={product.images[0].url}
+              alt={product.name}
+              className="w-full h-full object-cover"
+            />
+            {product.inSale && (
               <Badge className="absolute top-2 left-2 bg-foreground/90 text-background !text-xs font-semibold">
                 Sale
               </Badge>
@@ -39,7 +43,7 @@ export default function ProductModal({
           <div className="flex flex-col gap-6">
             <div>
               <Badge variant="secondary" className="mb-3">
-                {product.category}
+                {product.category?.name || "TBA"}
               </Badge>
               <div className="flex items-center gap-2 mb-4">
                 <div className="flex items-center">
@@ -54,14 +58,14 @@ export default function ProductModal({
                     />
                   ))}
                 </div>
-                <span className="text-sm text-muted-foreground">
+                {/* <span className="text-sm text-muted-foreground">
                   ({product.reviews.length} reviews)
-                </span>
+                </span> */}
               </div>
 
               <div className="flex items-baseline gap-3 mb-4">
                 <span className="text-3xl font-bold text-foreground">${product.price}</span>
-                {product.sale && (
+                {product.inSale && (
                   <span className="text-lg text-muted-foreground line-through">
                     ${product.salePrice}
                   </span>

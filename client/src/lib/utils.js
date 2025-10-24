@@ -24,7 +24,7 @@ export function onAddToFavorites(product) {
 
 export function handleAddToCart(product) {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  const existingProductIndex = cart.findIndex((item) => item.id === product.id);
+  const existingProductIndex = cart.findIndex((item) => item._id === product._id);
 
   if (existingProductIndex !== -1) {
     cart[existingProductIndex].quantity += 1;

@@ -44,7 +44,8 @@ export const getAllProducts = async (req, res) => {
     const products = await Product.find(query, projection)
       .sort(sortOption)
       .limit(Number(limit))
-      .skip((Number(page) - 1) * Number(limit));
+      .skip((Number(page) - 1) * Number(limit))
+      .populate("category", "name slug");
 
     // const count =
 
