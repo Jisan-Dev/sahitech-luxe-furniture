@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router";
+import { publicApi } from "./hooks/useAxios";
 import Main from "./layouts/main";
 import AboutPage from "./pages/about-us";
 import SigninPage from "./pages/auth/sign-in";
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
       {
         path: "products/:id",
         element: <ProductDetails />,
+        loader: ({ params }) => publicApi.get(`/products/${params.id}`),
       },
       {
         path: "contact",

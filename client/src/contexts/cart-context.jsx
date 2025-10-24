@@ -6,8 +6,8 @@ const CartContext = createContext();
 const CartProvider = ({ children }) => {
   const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")) || []);
 
-  const addToCart = (product) => {
-    setCart(handleAddToCart(product));
+  const addToCart = (product, quantity) => {
+    setCart(handleAddToCart(product, quantity));
   };
 
   const reduceQuantity = (productId) => {

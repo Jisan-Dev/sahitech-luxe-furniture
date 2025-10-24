@@ -22,14 +22,14 @@ export function onAddToFavorites(product) {
   });
 }
 
-export function handleAddToCart(product) {
+export function handleAddToCart(product, quantity = 1) {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
   const existingProductIndex = cart.findIndex((item) => item._id === product._id);
 
   if (existingProductIndex !== -1) {
-    cart[existingProductIndex].quantity += 1;
+    cart[existingProductIndex].quantity += quantity;
   } else {
-    cart.push({ ...product, quantity: 1 });
+    cart.push({ ...product, quantity });
   }
   localStorage.setItem("cart", JSON.stringify(cart));
   toast.success(`${product.name} added to cart!`, {

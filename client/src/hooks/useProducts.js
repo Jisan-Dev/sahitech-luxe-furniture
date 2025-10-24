@@ -1,5 +1,13 @@
 import { productsApi } from "@/lib/api";
-import { useQueries } from "@tanstack/react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
+
+// Get a product
+export const useProduct = (productId) => {
+  return useQuery({
+    queryKey: ["product", productId],
+    queryFn: () => productsApi.getAProduct(productId).then((res) => res.data.data),
+  });
+};
 
 // Get all products with filters - USE IN: Home page
 export const useHomepageProducts = () => {

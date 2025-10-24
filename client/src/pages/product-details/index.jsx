@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { products } from "@/lib/products-data";
+import { useProduct } from "@/hooks/useProducts";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
@@ -11,7 +11,19 @@ export default function ProductDetails() {
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
 
-  const product = products.find((p) => p.id === Number.parseInt(params.id));
+  // const product = products.find((p) => p.id === Number.parseInt(params.id));
+  const { data: product, isLoading } = useProduct(params?.id);
+  console.log(product);
+
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-text-muted">Loading Details...</p>
+        </div>
+      </div>
+    );
 
   if (!product) {
     return (
@@ -24,7 +36,7 @@ export default function ProductDetails() {
     );
   }
 
-  const displayPrice = product?.sale ? product?.salePrice : product?.price;
+  const displayPrice = product?.inSale ? product?.salePrice : product?.price;
 
   return (
     <div className="min-h-screen bg-background">
@@ -38,9 +50,9 @@ export default function ProductDetails() {
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
           {/* Product Image */}
           <ProductImage
-            productImage={product?.image}
+            productImage={product?.images[0].url}
             productName={product?.name}
-            productIsOnSale={product?.sale}
+            productIsOnSale={product?.inSale}
           />
 
           {/* Product Info */}
