@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { products } from "@/lib/products-data";
+import { useProducts } from "@/hooks/useProducts";
 import { useState } from "react";
 import ProductCard from "../../components/common/product-card";
 import CategoryFilter from "./category-filter";
@@ -20,21 +20,62 @@ export default function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("");
-
-  const filteredProducts = products.filter((product) => {
-    const matchesCategory = selectedCategory === "All" || product.category === selectedCategory;
-    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
+  const {
+    data: products,
+    isLoading,
+    isError,
+  } = useProducts({
+    category: selectedCategory.toLocaleLowerCase(),
+    search: searchQuery,
+    sort: sortOption,
   });
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const searchTerm = form.search.value;
+    setSearchQuery(searchTerm);
+  };
+
+  if (sortOption === "price-asc")
+    products?.sort((a, b) => (a.salePrice || a.price || 0) - (b.salePrice || b.price || 0));
+  if (sortOption === "price-dsc")
+    products?.sort((a, b) => (b.salePrice || b.price || 0) - (a.salePrice || a.price || 0));
+  // if (sortOption === "name") products.sort((a, b) => a.name.localeCompare(b.name));
+
+  // const filteredProducts = products.filter((product) => {
+  //   const matchesCategory = selectedCategory === "All" || product.category === selectedCategory;
+  //   const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
+  //   return matchesCategory && matchesSearch;
+  // });
 
   //apply price sorting to the filtered list
-  const sortedProducts = [...filteredProducts].sort((a, b) => {
-    if (sortOption === "lowToHigh")
-      return (a.salePrice ?? a.price ?? 0) - (b.salePrice ?? b.price ?? 0);
-    if (sortOption === "highToLow")
-      return (b.salePrice ?? b.price ?? 0) - (a.salePrice ?? a.price ?? 0);
-    return 0; //default, no sorting
-  });
+  // const sortedProducts = [...filteredProducts].sort((a, b) => {
+  //   if (sortOption === "lowToHigh")
+  //     return (a.salePrice ?? a.price ?? 0) - (b.salePrice ?? b.price ?? 0);
+  //   if (sortOption === "highToLow")
+  //     return (b.salePrice ?? b.price ?? 0) - (a.salePrice ?? a.price ?? 0);
+  //   return 0; //default, no sorting
+  // });
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-text-muted">Loading Products...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-red-500 text-lg">Error loading products. Please try again later.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -43,7 +84,7 @@ export default function ProductsPage() {
         <Header />
 
         {/* Search Bar */}
-        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <SearchBar onSearch={handleSearch} />
 
         {/* Category Filter + Sort control */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
@@ -73,7 +114,7 @@ export default function ProductsPage() {
 
             <Select onValueChange={setSortOption} value={sortOption}>
               <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Sort by price" />
+                <SelectValue placeholder="Sort Products" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -81,11 +122,14 @@ export default function ProductsPage() {
                   <SelectItem value="default" className="text-neutral-700">
                     Price: Random
                   </SelectItem>
-                  <SelectItem value="lowToHigh" className="text-neutral-700">
+                  <SelectItem value="price-asc" className="text-neutral-700">
                     Price: Low to High
                   </SelectItem>
-                  <SelectItem value="highToLow" className="text-neutral-700">
+                  <SelectItem value="price-dsc" className="text-neutral-700">
                     Price: High to Low
+                  </SelectItem>
+                  <SelectItem value="name" className="text-neutral-700">
+                    Name: Alphabetic Order
                   </SelectItem>
                 </SelectGroup>
               </SelectContent>
@@ -95,12 +139,12 @@ export default function ProductsPage() {
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {sortedProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
+          {products?.map((product) => (
+            <ProductCard key={product._id} product={product} />
           ))}
         </div>
 
-        {sortedProducts.length === 0 && (
+        {products?.length === 0 && (
           <div className="text-center py-12">
             <p className="text-muted-foreground">No products found matching your criteria.</p>
           </div>

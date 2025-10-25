@@ -9,6 +9,14 @@ export const useProduct = (productId) => {
   });
 };
 
+// Get all products: USE IN: Products page
+export const useProducts = (params) => {
+  return useQuery({
+    queryKey: ["products", params],
+    queryFn: () => productsApi.getAllProducts(params).then((res) => res.data.data),
+  });
+};
+
 // Get all products with filters - USE IN: Home page
 export const useHomepageProducts = () => {
   const results = useQueries({

@@ -1,3 +1,4 @@
+import Category from "../models/category.js";
 import Product from "../models/product.js";
 
 // Get all products with optional filters
@@ -9,7 +10,7 @@ export const getAllProducts = async (req, res) => {
       maxPrice,
       inStock,
       sort,
-      limit = 10,
+      limit = 12,
       page = 1,
       search,
       isFeatured,
@@ -18,7 +19,15 @@ export const getAllProducts = async (req, res) => {
 
     const query = { isActive: true };
 
-    if (category) query.category = category;
+    if (category) {
+      const categoryDoc = await Category.findOne({ slug: category });
+      if (categoryDoc) query.category = categoryDoc._id;
+      else if (category === "all") {
+        query.category = {
+          $exists: true,
+        }; //→ creates a MongoDB filter condition that matches documents where the field category exists (even if it’s null or any valid ObjectId).
+      } else return res.status(404).json({ success: false, message: "Category not found!" });
+    }
 
     if (minPrice || maxPrice) {
       query.price = {};

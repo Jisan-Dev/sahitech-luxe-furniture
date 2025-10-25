@@ -1,19 +1,18 @@
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 
-export default function SearchBar({ searchQuery, setSearchQuery }) {
+export default function SearchBar({ onSearch }) {
   return (
     <div className="mb-8">
-      <div className="relative max-w-md">
+      <form onSubmit={onSearch} className="relative max-w-md flex gap-2">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-        <Input
-          type="text"
-          placeholder="Search products..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-10"
-        />
-      </div>
+        <Input name="search" type="text" placeholder="Search products..." className="pl-10" />
+        <Button type="submit" className="">
+          <Search className="h-4 w-4" />
+          Search
+        </Button>
+      </form>
     </div>
   );
 }

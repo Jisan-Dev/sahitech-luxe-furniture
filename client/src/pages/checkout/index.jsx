@@ -157,11 +157,6 @@ export default function Checkout() {
     );
   }
 
-  // const subtotal = cart.totalAmount;
-  // const tax = subtotal * 0.1;
-  // const shipping = subtotal >= 500 ? 0 : 50;
-  // const total = subtotal + tax + shipping;
-
   const subtotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
   const tax = subtotal * 0.1;
   const shipping = subtotal >= 500 ? 0 : 50;
