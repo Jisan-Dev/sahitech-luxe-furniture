@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
+import { formatPrice } from "@/lib/utils";
 import { CheckCircle } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 // import { ordersAPI } from "../utils/api";
-// import { formatPrice } from "../utils/cart";
 // import { useAuth } from "../context/AuthContext"
 
 export default function Checkout() {
@@ -160,6 +161,11 @@ export default function Checkout() {
   // const tax = subtotal * 0.1;
   // const shipping = subtotal >= 500 ? 0 : 50;
   // const total = subtotal + tax + shipping;
+
+  const subtotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  const tax = subtotal * 0.1;
+  const shipping = subtotal >= 500 ? 0 : 50;
+  const total = subtotal + tax + shipping;
 
   return (
     <div className="min-h-screen bg-background py-8">
@@ -352,8 +358,8 @@ export default function Checkout() {
                       <p className="font-medium text-sm line-clamp-2">{item.name}</p>
                       <p className="text-sm text-text-muted">Qty: {item.quantity}</p>
                       <p className="text-sm font-semibold">
-                        {/* {formatPrice(item.price * item.quantity)} */}
-                        12345
+                        {formatPrice(item.price * item.quantity)}
+                        {/* 12345 */}
                       </p>
                     </div>
                   </div>
@@ -363,33 +369,30 @@ export default function Checkout() {
               <div className="space-y-3 pt-6 border-t border-border">
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-text-muted">Subtotal</span>
-                  <span className="font-semibold">12345</span>
-                  {/* <span className="font-semibold">{formatPrice(subtotal)}</span> */}
+                  {/* <span className="font-semibold">12345</span> */}
+                  <span className="font-semibold">{formatPrice(subtotal)}</span>
                 </div>
 
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-text-muted">Tax (10%)</span>
-                  {/* <span className="font-semibold">{formatPrice(tax)}</span> */}
-                  <span className="font-semibold">123</span>
+                  <span className="font-semibold">{formatPrice(tax)}</span>
                 </div>
 
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-text-muted">Shipping</span>
                   <span className="font-semibold">
-                    {/* {shipping === 0 ? (
+                    {shipping === 0 ? (
                       <span className="text-green-600">FREE</span>
                     ) : (
                       formatPrice(shipping)
-                    )} */}
-                    1234
+                    )}
                   </span>
                 </div>
 
                 <div className="pt-3 border-t border-border">
                   <div className="flex items-center justify-between">
                     <span className="font-semibold">Total</span>
-                    {/* <span className="text-2xl font-bold text-primary">{formatPrice(total)}</span> */}
-                    <span className="text-2xl font-bold text-primary">12345</span>
+                    <span className="text-2xl font-bold text-primary">{formatPrice(total)}</span>
                   </div>
                 </div>
               </div>

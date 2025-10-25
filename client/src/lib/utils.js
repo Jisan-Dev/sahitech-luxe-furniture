@@ -37,3 +37,11 @@ export function handleAddToCart(product, quantity = 1) {
   });
   return cart;
 }
+
+// Format price
+export const formatPrice = (price) => {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(price);
+};

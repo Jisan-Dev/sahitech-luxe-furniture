@@ -34,7 +34,10 @@ export default function CartPage() {
     removeFromCart(id);
   };
 
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const subtotal = cartItems.reduce(
+    (sum, item) => (sum + item.inSale ? item.salePrice : item.price * item.quantity),
+    0
+  );
   const shipping = subtotal > 500 ? 0 : 50;
   const total = subtotal + shipping;
 
@@ -76,7 +79,9 @@ export default function CartPage() {
 
                 <div className="flex-1">
                   <h3 className="font-medium text-foreground mb-2">{item.name}</h3>
-                  <p className="text-sm text-muted-foreground mb-3">${item.price}</p>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    ${item.inSale ? item.salePrice : item.price}
+                  </p>
 
                   <div className="flex items-center gap-3">
                     <Button
@@ -99,7 +104,9 @@ export default function CartPage() {
                   <Button variant="ghost" size="sm" onClick={() => removeItem(item._id)}>
                     <Trash2 className="h-4 w-4 text-muted-foreground hover:text-accent" />
                   </Button>
-                  <p className="font-bold">${item.price * item.quantity}</p>
+                  <p className="font-bold">
+                    ${item.inSale ? item.salePrice : item.price * item.quantity}
+                  </p>
                 </div>
               </div>
             ))}
