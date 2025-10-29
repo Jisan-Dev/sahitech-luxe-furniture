@@ -14,7 +14,8 @@ export default function SignUpPage() {
     try {
       const { user } = await createUser(data.email, data.password);
       console.log("user from reg page", user);
-      await updateUserProfile(data.name, data.phone);
+      updateUserProfile(data.name, data.phone);
+
       console.log("updated", auth.currentUser);
       const res = await authApi.registerUser({
         name: data.name,

@@ -67,7 +67,7 @@ export default function SignupForm({ onSubmit }) {
           {...register("phone", {
             required: "Phone number is required",
             pattern: {
-              value: /^\+?\d[\d\s-]{9,}$/,
+              value: /^\+?\d[\d\s\-()]{9,}$/,
               message: "Please enter a valid phone number",
             },
           })}

@@ -1,17 +1,26 @@
+import { useAuth } from "@/contexts/auth-context";
 import { useCart } from "@/contexts/cart-context";
 import { Menu, ShoppingCart, X } from "lucide-react";
 import { useState } from "react";
 import { Link, NavLink } from "react-router";
+import { toast } from "sonner";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { cart } = useCart();
+  const { user, loading, logOut } = useAuth();
 
   const totalItemsInCart = cart.reduce(
     (total, item) => total + item.quantity,
     0,
   );
+
+  const userLogout = async () => {
+    await logOut();
+    toast.success("Logged out successfully");
+  };
 
   return (
     <nav className="bg-background/95 supports-[backdrop-filter]:bg-background/80 border-border sticky top-0 z-50 border-b backdrop-blur">
@@ -77,11 +86,30 @@ export default function Navbar() {
               </span>
             </Link>
 
-            <Link to={"sign-in"}>
-              <Button variant="outline" to="/sign-in">
-                Sign Up
-              </Button>
-            </Link>
+            {loading && <Button variant={"outline"}>Loading...</Button>}
+
+            {!loading ? (
+              user ? (
+                <>
+                  <Avatar>
+                    <AvatarImage
+                      src="https://github.com/evilrabbit.png"
+                      alt="@evilrabbit"
+                      title={!loading ? user?.displayName : "User Avatar"}
+                    />
+                    <AvatarFallback>ER</AvatarFallback>
+                  </Avatar>
+                  <p>{user?.displayName}</p>
+                  <Button onClick={userLogout} variant="outline">
+                    Sign Out
+                  </Button>
+                </>
+              ) : (
+                <Link to={"sign-up"}>
+                  <Button variant="outline">Sign Up</Button>
+                </Link>
+              )
+            ) : null}
 
             {/* Mobile Menu Button */}
             <button
