@@ -30,9 +30,11 @@ export const loginUser = async (req, res) => {
       return res.status(401).json({ success: false, message: "Invalid credentials" });
     }
 
-    if (!user.isActive) {
-      return res.status(401).json({ success: false, message: "Account is inactive" });
-    }
+    // if (!user.isActive) {
+    //   return res.status(401).json({ success: false, message: "Account is inactive" });
+    // }
+
+    const token = user.getSignedJwtToken();
 
     res.json({
       success: true,
