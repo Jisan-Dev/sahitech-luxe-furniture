@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 export default function SignupForm({ onSubmit }) {
   const {
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit,
     watch,
   } = useForm();
@@ -14,7 +14,7 @@ export default function SignupForm({ onSubmit }) {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       {/* Name Field */}
       <div>
-        <label htmlFor="name" className="block text-sm font-medium mb-2">
+        <label htmlFor="name" className="mb-2 block text-sm font-medium">
           Full Name
         </label>
         <Input
@@ -24,12 +24,16 @@ export default function SignupForm({ onSubmit }) {
           placeholder="John Doe"
           aria-invalid={errors.name ? "true" : "false"}
         />
-        {errors?.name && <p className="text-xs text-destructive mt-1">{errors.name?.message}</p>}
+        {errors?.name && (
+          <p className="text-destructive mt-1 text-xs">
+            {errors.name?.message}
+          </p>
+        )}
       </div>
 
       {/* Email Field */}
       <div>
-        <label htmlFor="email" className="block text-sm font-medium mb-2">
+        <label htmlFor="email" className="mb-2 block text-sm font-medium">
           Email Address
         </label>
         <Input
@@ -45,12 +49,16 @@ export default function SignupForm({ onSubmit }) {
           placeholder="john@example.com"
           aria-invalid={errors.email ? "true" : "false"}
         />
-        {errors?.email && <p className="text-xs text-destructive mt-1">{errors.email?.message}</p>}
+        {errors?.email && (
+          <p className="text-destructive mt-1 text-xs">
+            {errors.email?.message}
+          </p>
+        )}
       </div>
 
       {/* Phone Field */}
       <div>
-        <label htmlFor="phone" className="block text-sm font-medium mb-2">
+        <label htmlFor="phone" className="mb-2 block text-sm font-medium">
           Phone Number
         </label>
         <Input
@@ -66,12 +74,16 @@ export default function SignupForm({ onSubmit }) {
           placeholder="(555) 123-4567"
           aria-invalid={errors.phone ? "true" : "false"}
         />
-        {errors?.phone && <p className="text-xs text-destructive mt-1">{errors.phone?.message}</p>}
+        {errors?.phone && (
+          <p className="text-destructive mt-1 text-xs">
+            {errors.phone?.message}
+          </p>
+        )}
       </div>
 
       {/* Password Field */}
       <div>
-        <label htmlFor="password" className="block text-sm font-medium mb-2">
+        <label htmlFor="password" className="mb-2 block text-sm font-medium">
           Password
         </label>
         <Input
@@ -88,13 +100,18 @@ export default function SignupForm({ onSubmit }) {
           aria-invalid={errors.password ? "true" : "false"}
         />
         {errors?.password && (
-          <p className="text-xs text-destructive mt-1">{errors.password?.message}</p>
+          <p className="text-destructive mt-1 text-xs">
+            {errors.password?.message}
+          </p>
         )}
       </div>
 
       {/* Confirm Password Field */}
       <div>
-        <label htmlFor="confirmPassword" className="block text-sm font-medium mb-2">
+        <label
+          htmlFor="confirmPassword"
+          className="mb-2 block text-sm font-medium"
+        >
           Confirm Password
         </label>
         <Input
@@ -102,19 +119,27 @@ export default function SignupForm({ onSubmit }) {
           type="password"
           {...register("confirmPassword", {
             required: "Please confirm your password",
-            validate: (value) => value === watch("password") || "Passwords do not match",
+            validate: (value) =>
+              value === watch("password") || "Passwords do not match",
           })}
           placeholder="••••••••"
           aria-invalid={errors.confirmPassword ? "true" : "false"}
         />
         {errors.confirmPassword && (
-          <p className="text-xs text-destructive mt-1">{errors.confirmPassword.message}</p>
+          <p className="text-destructive mt-1 text-xs">
+            {errors.confirmPassword.message}
+          </p>
         )}
       </div>
 
       {/* Submit Button */}
-      <Button type="submit" size="lg" className="w-full mt-6">
-        Create Account
+      <Button
+        type="submit"
+        size="lg"
+        disabled={isSubmitting}
+        className={`mt-6 w-full ${isSubmitting && "cursor-not-allowed opacity-70"}`}
+      >
+        {isSubmitting ? "Creating Account..." : "Create Account"}
       </Button>
     </form>
   );

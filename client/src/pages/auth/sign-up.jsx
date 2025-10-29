@@ -1,31 +1,77 @@
-import { Link } from "react-router";
+import { useAuth } from "@/contexts/auth-context";
+import { auth } from "@/firebase.config";
+import { authApi } from "@/lib/api";
+import { Link, useNavigate } from "react-router";
+import { toast } from "sonner";
 import SignupForm from "./signup-form";
 
 export default function SignUpPage() {
-  const onSubmit = (data) => {
+  const { createUser, updateUserProfile } = useAuth();
+  const navigate = useNavigate();
+
+  const onSubmit = async (data) => {
     delete data.confirmPassword;
-    console.log(data);
+    try {
+      const { user } = await createUser(data.email, data.password);
+      console.log("user from reg page", user);
+      await updateUserProfile(data.name, data.phone);
+      console.log("updated", auth.currentUser);
+      const res = await authApi.registerUser({
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        password: data.password,
+      });
+      // console.log("res from server", res);
+      localStorage.setItem("token", res.data.token);
+      toast.success("Account created successfully!");
+      navigate("/");
+    } catch (error) {
+      console.error("Catch error during sign-up:", error.code, error.message);
+      let errorMessage = "Failed to create account. Please try again.";
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          errorMessage =
+            "The email address is already in use by another account.";
+          break;
+        case "auth/invalid-email":
+          errorMessage = "The email address is not valid.";
+          break;
+        case "auth/weak-password":
+          errorMessage =
+            "The password is too weak. Please choose a stronger password.";
+          break;
+        default:
+          errorMessage = error.message;
+      }
+      toast.error(errorMessage);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background min-h-screen">
       <div className="container mx-auto px-4 py-8 md:py-12">
-        <div className="max-w-md mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-2">
+        <div className="mx-auto max-w-md">
+          <div className="mb-8 text-center">
+            <h1 className="text-foreground mb-2 font-serif text-3xl font-bold md:text-4xl">
               Create Account
             </h1>
-            <p className="text-muted-foreground">Join us and start shopping premium furniture</p>
+            <p className="text-muted-foreground">
+              Join us and start shopping premium furniture
+            </p>
           </div>
 
-          <div className="bg-card border border-border rounded-lg p-6 md:p-8">
+          <div className="bg-card border-border rounded-lg border p-6 md:p-8">
             <SignupForm onSubmit={onSubmit} />
 
             {/* Login Link */}
             <div className="mt-6 text-center">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Already have an account?{" "}
-                <Link to="/sign-in" className="text-primary font-medium hover:underline">
+                <Link
+                  to="/sign-in"
+                  className="text-primary font-medium hover:underline"
+                >
                   Log in
                 </Link>
               </p>

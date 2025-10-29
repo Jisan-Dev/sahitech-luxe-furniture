@@ -1,3 +1,4 @@
+import { useAuth } from "@/contexts/auth-context";
 import { useHomepageProducts } from "@/hooks/useProducts";
 import CategoryShowcase from "./category-showcase";
 import FeaturedProducts from "./featured-products";
@@ -10,19 +11,24 @@ import Testimonials from "./testimonials";
 import TrustBadges from "./trust-badges";
 
 export default function Homepage() {
-  const [newProducts, featuredProducts, flashSaleProducts] = useHomepageProducts();
+  const { user } = useAuth();
+  const [newProducts, featuredProducts, flashSaleProducts] =
+    useHomepageProducts();
+  console.log(user);
 
-  if (newProducts.isLoading || featuredProducts.isLoading || flashSaleProducts.isLoading)
+  if (
+    newProducts.isLoading ||
+    featuredProducts.isLoading ||
+    flashSaleProducts.isLoading
+  )
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="border-primary mx-auto mb-4 h-16 w-16 animate-spin rounded-full border-4 border-t-transparent"></div>
           <p className="text-text-muted">Loading Homepage...</p>
         </div>
       </div>
     );
-
-  console.log("n", newProducts.data, "fe", featuredProducts.data, "flash", flashSaleProducts.data);
   return (
     <>
       <Hero />
