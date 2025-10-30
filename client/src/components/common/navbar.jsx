@@ -95,11 +95,15 @@ export default function Navbar() {
                     <AvatarImage
                       src="https://github.com/evilrabbit.png"
                       alt="@evilrabbit"
-                      title={!loading ? user?.displayName : "User Avatar"}
+                      title={
+                        !loading
+                          ? user?.displayName || user?.name
+                          : "User Avatar"
+                      }
                     />
                     <AvatarFallback>ER</AvatarFallback>
                   </Avatar>
-                  <p>{user?.displayName}</p>
+                  <p>{user?.displayName || user?.name}</p>
                   <Button onClick={userLogout} variant="outline">
                     Sign Out
                   </Button>

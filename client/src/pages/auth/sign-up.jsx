@@ -6,25 +6,24 @@ import { toast } from "sonner";
 import SignupForm from "./signup-form";
 
 export default function SignUpPage() {
-  const { createUser, updateUserProfile } = useAuth();
+  const { createUser, updateUserProfile, setUser } = useAuth();
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     delete data.confirmPassword;
     try {
-      const { user } = await createUser(data.email, data.password);
-      console.log("user from reg page", user);
-      updateUserProfile(data.name, data.phone);
-
-      console.log("updated", auth.currentUser);
       const res = await authApi.registerUser({
         name: data.name,
         email: data.email,
         phone: data.phone,
         password: data.password,
       });
-      // console.log("res from server", res);
+      const { user } = await createUser(data.email, data.password);
+      console.log("user from reg page", user);
+      updateUserProfile(data.name, data.phone);
+
       localStorage.setItem("token", res.data.token);
+      setUser({ ...auth.currentUser, ...res.data.data });
       toast.success("Account created successfully!");
       navigate("/");
     } catch (error) {

@@ -1,4 +1,5 @@
 import { auth } from "@/firebase.config";
+import { privateApi } from "@/hooks/useAxios";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -50,8 +51,23 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
-        console.log("CurrentUser-->", currentUser);
+
+        const token = localStorage.getItem("token");
+
+        if (token) {
+          privateApi
+            .get("/auth/me")
+            .then((response) => {
+              const userData = response.data.data;
+              setUser({ ...currentUser, ...userData });
+            })
+            .catch((error) => {
+              console.error("Error fetching user data:", error);
+            });
+        }
+
         setLoading(false);
+        console.log("CurrentUser-->", currentUser);
       } else {
         setUser(null);
         localStorage.removeItem("token");

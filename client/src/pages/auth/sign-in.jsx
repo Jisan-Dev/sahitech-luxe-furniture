@@ -1,11 +1,12 @@
 import { useAuth } from "@/contexts/auth-context";
+import { auth } from "@/firebase.config";
 import { authApi } from "@/lib/api";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
 import SigninForm from "./signin-form";
 
 export default function SigninPage() {
-  const { signIn } = useAuth();
+  const { signIn, setUser } = useAuth();
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
@@ -19,7 +20,10 @@ export default function SigninPage() {
       const { user } = await signIn(data.email, data.password);
       console.log("user from sign-in page after firebase login", user);
 
-      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("token", res.data.data.token);
+
+      setUser({ ...auth.currentUser, ...res.data.data.user });
+
       toast.success("Signed in successfully!");
       navigate("/");
     } catch (error) {
