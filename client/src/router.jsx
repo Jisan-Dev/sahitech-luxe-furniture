@@ -8,6 +8,7 @@ import CartPage from "./pages/cart";
 import Checkout from "./pages/checkout";
 import ContactPage from "./pages/contact";
 import Homepage from "./pages/home";
+import Orders from "./pages/orders";
 import ProductDetails from "./pages/product-details";
 import ProductsPage from "./pages/products";
 
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
       {
         path: "checkout",
         element: <Checkout />,
+      },
+      {
+        path: "orders",
+        element: <Orders />,
       },
     ],
   },

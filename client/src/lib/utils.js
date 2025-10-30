@@ -24,7 +24,9 @@ export function onAddToFavorites(product) {
 
 export function handleAddToCart(product, quantity = 1) {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  const existingProductIndex = cart.findIndex((item) => item._id === product._id);
+  const existingProductIndex = cart.findIndex(
+    (item) => item._id === product._id,
+  );
 
   if (existingProductIndex !== -1) {
     cart[existingProductIndex].quantity += quantity;
@@ -44,4 +46,27 @@ export const formatPrice = (price) => {
     style: "currency",
     currency: "USD",
   }).format(price);
+};
+
+export const formatDate = (date) => {
+  const d = new Date(date);
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const month = months[d.getMonth()];
+  const day = d.getDate();
+  const year = d.getFullYear();
+
+  return `${month} ${day}, ${year}`;
 };
