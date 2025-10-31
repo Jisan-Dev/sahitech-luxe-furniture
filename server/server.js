@@ -5,6 +5,7 @@ import helmet from "helmet";
 import mongoose from "mongoose";
 import authRouter from "./routes/authRoutes.js";
 import categoryRouter from "./routes/categoryRoutes.js";
+import orderRouter from "./routes/orderRoutes.js";
 import productRouter from "./routes/productRoutes.js";
 dotenv.config();
 
@@ -48,6 +49,9 @@ app.use("/api/categories", categoryRouter);
 
 // Auth routes
 app.use("/api/auth", authRouter);
+
+// Order routes
+app.use("/api/orders", orderRouter);
 
 // Error handling
 app.use((err, _req, res, _next) => {

@@ -1,11 +1,20 @@
 import { useAuth } from "@/contexts/auth-context";
 import { useCart } from "@/contexts/cart-context";
-import { Menu, ShoppingCart, X } from "lucide-react";
+import { BadgeCheckIcon, Menu, ShoppingCart, X } from "lucide-react";
 import { useState } from "react";
 import { Link, NavLink } from "react-router";
 import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -91,19 +100,46 @@ export default function Navbar() {
             {!loading ? (
               user ? (
                 <>
-                  <Avatar>
-                    <AvatarImage
-                      src="https://github.com/evilrabbit.png"
-                      alt="@evilrabbit"
-                      title={
-                        !loading
-                          ? user?.displayName || user?.name
-                          : "User Avatar"
-                      }
-                    />
-                    <AvatarFallback>ER</AvatarFallback>
-                  </Avatar>
-                  <p>{user?.displayName || user?.name}</p>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger>
+                      <Avatar>
+                        <AvatarImage
+                          src="https://github.com/evilrabbit.png"
+                          // src="https://gravatar.com/avatar/2a1e22f9d52902aed453beb6af6a12b7?s=400&d=mp&r=x"
+                          alt="@evilrabbit"
+                          title={
+                            !loading
+                              ? user?.displayName || user?.name
+                              : "User Avatar"
+                          }
+                        />
+                        <AvatarFallback>ER</AvatarFallback>
+                      </Avatar>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuLabel>
+                        <p className="text-sm font-medium">My Account</p>
+                        <p className="text-muted-foreground text-xs font-medium">
+                          {user?.displayName || user?.name}
+                          <Badge className="ml-2" variant={"outline"}>
+                            <BadgeCheckIcon stroke="green" className="" />
+                            {user?.role}
+                          </Badge>
+                        </p>
+                      </DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem className="text-sm font-medium">
+                        Profile
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="text-sm font-medium">
+                        <Link to="/orders">My Orders</Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="text-sm font-medium">
+                        <Link to="/cart">Shopping Cart</Link>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+
                   <Button onClick={userLogout} variant="outline">
                     Sign Out
                   </Button>
