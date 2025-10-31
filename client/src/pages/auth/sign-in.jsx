@@ -1,13 +1,15 @@
 import { useAuth } from "@/contexts/auth-context";
 import { auth } from "@/firebase.config";
 import { authApi } from "@/lib/api";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { toast } from "sonner";
 import SigninForm from "./signin-form";
 
 export default function SigninPage() {
   const { signIn, setUser } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const pathToRedirect = location?.state?.from?.pathname || "/";
 
   const onSubmit = async (data) => {
     try {
@@ -25,7 +27,7 @@ export default function SigninPage() {
       setUser({ ...auth.currentUser, ...res.data.data.user });
 
       toast.success("Signed in successfully!");
-      navigate("/");
+      navigate(pathToRedirect);
     } catch (error) {
       console.error("Error during sign-in:", error);
       let errorMessage = "Failed to sign in. Please try again.";

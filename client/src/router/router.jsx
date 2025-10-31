@@ -1,16 +1,16 @@
 import { createBrowserRouter } from "react-router";
-import { publicApi } from "./hooks/useAxios";
-import Main from "./layouts/main";
-import AboutPage from "./pages/about-us";
-import SigninPage from "./pages/auth/sign-in";
-import SignUpPage from "./pages/auth/sign-up";
-import CartPage from "./pages/cart";
-import Checkout from "./pages/checkout";
-import ContactPage from "./pages/contact";
-import Homepage from "./pages/home";
-import Orders from "./pages/orders";
-import ProductDetails from "./pages/product-details";
-import ProductsPage from "./pages/products";
+import Main from "../layouts/main";
+import AboutPage from "../pages/about-us";
+import SigninPage from "../pages/auth/sign-in";
+import SignUpPage from "../pages/auth/sign-up";
+import CartPage from "../pages/cart";
+import Checkout from "../pages/checkout";
+import ContactPage from "../pages/contact";
+import Homepage from "../pages/home";
+import Orders from "../pages/orders";
+import ProductDetails from "../pages/product-details";
+import ProductsPage from "../pages/products";
+import ProtectedRoute from "./protected-route";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +28,6 @@ const router = createBrowserRouter([
       {
         path: "products/:id",
         element: <ProductDetails />,
-        loader: ({ params }) => publicApi.get(`/products/${params.id}`),
       },
       {
         path: "contact",
@@ -56,7 +55,11 @@ const router = createBrowserRouter([
       },
       {
         path: "orders",
-        element: <Orders />,
+        element: (
+          <ProtectedRoute>
+            <Orders />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
