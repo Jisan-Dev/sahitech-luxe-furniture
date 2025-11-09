@@ -50,7 +50,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        setUser(currentUser);
+        // setUser(currentUser);
 
         const token = localStorage.getItem("token");
 
@@ -63,11 +63,14 @@ const AuthProvider = ({ children }) => {
             })
             .catch((error) => {
               console.error("Error fetching user data:", error);
+            })
+            .finally(() => {
+              setLoading(false);
             });
         }
 
-        setLoading(false);
-        console.log("CurrentUser-->", currentUser);
+        // setLoading(false);
+        // console.log("CurrentUser-->", currentUser);
       } else {
         setUser(null);
         localStorage.removeItem("token");

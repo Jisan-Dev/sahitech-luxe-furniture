@@ -1,4 +1,6 @@
 /* eslint-disable no-unused-vars */
+import { useAuth } from "@/contexts/auth-context";
+import { useCreateOrder } from "@/hooks/useOrders";
 import { formatPrice } from "@/lib/utils";
 import { CheckCircle } from "lucide-react";
 import { useState } from "react";
@@ -8,35 +10,40 @@ import { useNavigate } from "react-router";
 
 export default function Checkout() {
   const navigate = useNavigate();
+  const createOrder = useCreateOrder();
+  const { user, loading: authLoading } = useAuth();
+  console.log(user);
   // const { user } = useAuth()
-  const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")) || []);
-  // const [loading, setLoading] = useState(true);
+  const [cart, setCart] = useState(
+    JSON.parse(localStorage.getItem("cart")) || [],
+  );
+  const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [orderComplete, setOrderComplete] = useState(false);
   const [orderNumber, setOrderNumber] = useState("");
 
+  // const [formData, setFormData] = useState({
+  //   name: "",
+  //   email: "",
+  //   phone: "",
+  //   street: "",
+  //   city: "",
+  //   state: "",
+  //   zipCode: "",
+  //   country: "",
+  //   notes: "",
+  // });
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    street: "",
-    city: "",
-    state: "",
-    zipCode: "",
-    country: "",
+    name: user?.name || "",
+    email: user?.email || "",
+    phone: user?.phone || "",
+    street: user?.address?.street || "",
+    city: user?.address?.city || "",
+    state: user?.address?.state || "",
+    zipCode: user?.address?.zipCode || "",
+    country: user?.address?.country || "",
     notes: "",
   });
-  // const [formData, setFormData] = useState({
-  //   name: user?.name || "",
-  //   email: user?.email || "",
-  //   phone: user?.phone || "",
-  //   street: user?.address?.street || "",
-  //   city: user?.address?.city || "",
-  //   state: user?.address?.state || "",
-  //   zipCode: user?.address?.zipCode || "",
-  //   country: user?.address?.country || "",
-  //   notes: "",
-  // })
 
   // useEffect(() => {
   //   const fetchCart = async () => {
@@ -75,79 +82,102 @@ export default function Checkout() {
     });
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setSubmitting(true);
+  const subtotal = cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0,
+  );
+  const tax = subtotal * 0.1;
+  const shipping = subtotal >= 500 ? 0 : 50;
+  const total = subtotal + tax + shipping;
 
-  //   try {
-  //     const orderData = {
-  //       customerInfo: {
-  //         name: formData.name,
-  //         email: formData.email,
-  //         phone: formData.phone,
-  //         address: {
-  //           street: formData.street,
-  //           city: formData.city,
-  //           state: formData.state,
-  //           zipCode: formData.zipCode,
-  //           country: formData.country,
-  //         },
-  //       },
-  //       notes: formData.notes,
-  //     };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
 
-  //     // if (!user) {
-  //     //   orderData.sessionId = getSessionId();
-  //     // }
+    try {
+      const orderData = {
+        items: cart.map((item) => ({
+          productId: item._id,
+          quantity: item.quantity,
+        })),
+        shippingAddress: {
+          street: formData.street,
+          city: formData.city,
+          state: formData.state,
+          zipCode: formData.zipCode,
+          country: formData.country,
+        },
+        notes: formData.notes,
+        subtotal,
+        tax,
+        shipping,
+        total,
+        paymentMethod: "paypal",
+      };
 
-  //     const response = await ordersAPI.create(orderData);
-  //     setOrderNumber(response.data.data.orderNumber);
-  //     setOrderComplete(true);
-  //   } catch (error) {
-  //     console.error("Error creating order:", error);
-  //     alert(error.response?.data?.message || "Failed to create order. Please try again.");
-  //   } finally {
-  //     setSubmitting(false);
-  //   }
-  // };
+      // if (!user) {
+      //   orderData.sessionId = getSessionId();
+      // }
 
-  // if (loading) {
-  //   return (
-  //     <div className="flex items-center justify-center min-h-screen">
-  //       <div className="text-center">
-  //         <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-  //         <p className="text-text-muted">Loading checkout...</p>
-  //       </div>
-  //     </div>
-  //   );
-  // }
+      const { data } = await createOrder.mutateAsync(orderData);
+      console.log("data", data?.data);
+      setOrderNumber(data?.data?.orderNumber);
+      setOrderComplete(true);
+    } catch (error) {
+      console.error("Error creating order:", error);
+      alert(
+        error.response?.data?.message ||
+          "Failed to create order. Please try again.",
+      );
+    } finally {
+      setSubmitting(false);
+      setLoading(false);
+    }
+  };
+
+  if (authLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-center">
+          <div className="border-primary mx-auto mb-4 h-16 w-16 animate-spin rounded-full border-4 border-t-transparent"></div>
+          <p className="text-text-muted">Loading checkout...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (orderComplete) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center py-12">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="bg-surface rounded-lg border border-border p-12">
-            <CheckCircle className="w-24 h-24 text-green-600 mx-auto mb-6" />
-            <h1 className="text-3xl md:text-4xl font-serif font-bold mb-4">Order Confirmed!</h1>
-            <p className="text-lg text-text-muted mb-6">
-              Thank you for your order. We've received your order and will process it shortly.
+      <div className="bg-background flex min-h-screen items-center justify-center py-12">
+        <div className="mx-auto max-w-2xl px-4 text-center sm:px-6 lg:px-8">
+          <div className="bg-surface border-border rounded-lg border p-12">
+            <CheckCircle className="mx-auto mb-6 h-24 w-24 text-green-600" />
+            <h1 className="mb-4 font-serif text-3xl font-bold md:text-4xl">
+              Order Confirmed!
+            </h1>
+            <p className="text-text-muted mb-6 text-lg">
+              Thank you for your order. We've received your order and will
+              process it shortly.
             </p>
-            <div className="bg-background p-6 rounded-lg mb-8">
-              <p className="text-sm text-text-muted mb-2">Order Number</p>
-              <p className="text-2xl font-bold text-primary">{orderNumber}</p>
+            <div className="bg-background mb-8 rounded-lg p-6">
+              <p className="text-text-muted mb-2 text-sm">Order Number</p>
+              <p className="text-primary text-2xl font-bold">{orderNumber}</p>
             </div>
             <p className="text-text-muted mb-8">
-              A confirmation email has been sent to <strong>{formData.email}</strong>
+              A confirmation email has been sent to{" "}
+              <strong>{formData.email}</strong>
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col justify-center gap-4 sm:flex-row">
               <button
                 onClick={() => navigate("/")}
-                className="bg-primary text-white px-8 py-3 rounded-full font-medium hover:bg-primary-dark transition-colors">
+                className="bg-primary hover:bg-primary-dark rounded-full px-8 py-3 font-medium text-white transition-colors"
+              >
                 Back to Home
               </button>
               <button
                 onClick={() => navigate("/products")}
-                className="bg-surface text-primary px-8 py-3 rounded-full font-medium border-2 border-primary hover:bg-primary hover:text-white transition-colors">
+                className="bg-surface text-primary border-primary hover:bg-primary rounded-full border-2 px-8 py-3 font-medium transition-colors hover:text-white"
+              >
                 Continue Shopping
               </button>
             </div>
@@ -157,26 +187,28 @@ export default function Checkout() {
     );
   }
 
-  const subtotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
-  const tax = subtotal * 0.1;
-  const shipping = subtotal >= 500 ? 0 : 50;
-  const total = subtotal + tax + shipping;
-
   return (
-    <div className="min-h-screen bg-background py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl md:text-4xl font-serif font-bold mb-8">Checkout</h1>
+    <div className="bg-background min-h-screen py-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <h1 className="mb-8 font-serif text-3xl font-bold md:text-4xl">
+          Checkout
+        </h1>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           {/* Checkout Form */}
           <div className="lg:col-span-2">
-            <form className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               {/* Contact Information */}
-              <div className="bg-surface rounded-lg border border-border p-6">
-                <h2 className="text-xl font-serif font-bold mb-6">Contact Information</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="bg-surface border-border rounded-lg border p-6">
+                <h2 className="mb-6 font-serif text-xl font-bold">
+                  Contact Information
+                </h2>
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                   <div className="sm:col-span-2">
-                    <label htmlFor="name" className="block text-sm font-medium mb-2">
+                    <label
+                      htmlFor="name"
+                      className="mb-2 block text-sm font-medium"
+                    >
                       Full Name *
                     </label>
                     <input
@@ -186,13 +218,16 @@ export default function Checkout() {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="border-border focus:ring-primary w-full rounded-lg border px-4 py-3 focus:ring-2 focus:outline-none"
                       placeholder="John Doe"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium mb-2">
+                    <label
+                      htmlFor="email"
+                      className="mb-2 block text-sm font-medium"
+                    >
                       Email *
                     </label>
                     <input
@@ -202,13 +237,16 @@ export default function Checkout() {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="border-border focus:ring-primary w-full rounded-lg border px-4 py-3 focus:ring-2 focus:outline-none"
                       placeholder="john@example.com"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-medium mb-2">
+                    <label
+                      htmlFor="phone"
+                      className="mb-2 block text-sm font-medium"
+                    >
                       Phone *
                     </label>
                     <input
@@ -218,7 +256,7 @@ export default function Checkout() {
                       value={formData.phone}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="border-border focus:ring-primary w-full rounded-lg border px-4 py-3 focus:ring-2 focus:outline-none"
                       placeholder="(555) 123-4567"
                     />
                   </div>
@@ -226,11 +264,16 @@ export default function Checkout() {
               </div>
 
               {/* Shipping Address */}
-              <div className="bg-surface rounded-lg border border-border p-6">
-                <h2 className="text-xl font-serif font-bold mb-6">Shipping Address</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="bg-surface border-border rounded-lg border p-6">
+                <h2 className="mb-6 font-serif text-xl font-bold">
+                  Shipping Address
+                </h2>
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                   <div className="sm:col-span-2">
-                    <label htmlFor="street" className="block text-sm font-medium mb-2">
+                    <label
+                      htmlFor="street"
+                      className="mb-2 block text-sm font-medium"
+                    >
                       Street Address *
                     </label>
                     <input
@@ -240,13 +283,16 @@ export default function Checkout() {
                       value={formData.street}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="border-border focus:ring-primary w-full rounded-lg border px-4 py-3 focus:ring-2 focus:outline-none"
                       placeholder="123 Main Street"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="city" className="block text-sm font-medium mb-2">
+                    <label
+                      htmlFor="city"
+                      className="mb-2 block text-sm font-medium"
+                    >
                       City *
                     </label>
                     <input
@@ -256,13 +302,16 @@ export default function Checkout() {
                       value={formData.city}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="border-border focus:ring-primary w-full rounded-lg border px-4 py-3 focus:ring-2 focus:outline-none"
                       placeholder="New York"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="state" className="block text-sm font-medium mb-2">
+                    <label
+                      htmlFor="state"
+                      className="mb-2 block text-sm font-medium"
+                    >
                       State *
                     </label>
                     <input
@@ -272,13 +321,16 @@ export default function Checkout() {
                       value={formData.state}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="border-border focus:ring-primary w-full rounded-lg border px-4 py-3 focus:ring-2 focus:outline-none"
                       placeholder="NY"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="zipCode" className="block text-sm font-medium mb-2">
+                    <label
+                      htmlFor="zipCode"
+                      className="mb-2 block text-sm font-medium"
+                    >
                       ZIP Code *
                     </label>
                     <input
@@ -288,13 +340,16 @@ export default function Checkout() {
                       value={formData.zipCode}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="border-border focus:ring-primary w-full rounded-lg border px-4 py-3 focus:ring-2 focus:outline-none"
                       placeholder="10001"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="country" className="block text-sm font-medium mb-2">
+                    <label
+                      htmlFor="country"
+                      className="mb-2 block text-sm font-medium"
+                    >
                       Country *
                     </label>
                     <input
@@ -304,13 +359,16 @@ export default function Checkout() {
                       value={formData.country}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="border-border focus:ring-primary w-full rounded-lg border px-4 py-3 focus:ring-2 focus:outline-none"
                       placeholder="United States"
                     />
                   </div>
 
                   <div className="sm:col-span-2">
-                    <label htmlFor="notes" className="block text-sm font-medium mb-2">
+                    <label
+                      htmlFor="notes"
+                      className="mb-2 block text-sm font-medium"
+                    >
                       Order Notes (Optional)
                     </label>
                     <textarea
@@ -319,7 +377,7 @@ export default function Checkout() {
                       value={formData.notes}
                       onChange={handleChange}
                       rows={3}
-                      className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+                      className="border-border focus:ring-primary w-full resize-none rounded-lg border px-4 py-3 focus:ring-2 focus:outline-none"
                       placeholder="Any special instructions for your order..."
                     />
                   </div>
@@ -329,7 +387,8 @@ export default function Checkout() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full bg-primary text-white py-4 rounded-lg font-medium hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                className="bg-primary hover:bg-primary-dark w-full rounded-lg py-4 font-medium text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+              >
                 {submitting ? "Processing..." : "Place Order"}
               </button>
             </form>
@@ -337,21 +396,27 @@ export default function Checkout() {
 
           {/* Order Summary */}
           <div className="lg:col-span-1">
-            <div className="bg-surface rounded-lg border border-border p-6 sticky top-24">
-              <h2 className="text-xl font-serif font-bold mb-6">Order Summary</h2>
+            <div className="bg-surface border-border sticky top-24 rounded-lg border p-6">
+              <h2 className="mb-6 font-serif text-xl font-bold">
+                Order Summary
+              </h2>
 
               {/* Cart Items */}
-              <div className="space-y-4 mb-6 max-h-64 overflow-y-auto">
+              <div className="mb-6 max-h-64 space-y-4 overflow-y-auto">
                 {cart?.map((item) => (
                   <div key={item._id} className="flex gap-4">
                     <img
                       src={item.images[0].url || "/placeholder.svg"}
                       alt={item.name}
-                      className="w-16 h-16 object-cover rounded-lg border border-border flex-shrink-0"
+                      className="border-border h-16 w-16 flex-shrink-0 rounded-lg border object-cover"
                     />
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-sm line-clamp-2">{item.name}</p>
-                      <p className="text-sm text-text-muted">Qty: {item.quantity}</p>
+                    <div className="min-w-0 flex-1">
+                      <p className="line-clamp-2 text-sm font-medium">
+                        {item.name}
+                      </p>
+                      <p className="text-text-muted text-sm">
+                        Qty: {item.quantity}
+                      </p>
                       <p className="text-sm font-semibold">
                         {formatPrice(item.price * item.quantity)}
                         {/* 12345 */}
@@ -361,7 +426,7 @@ export default function Checkout() {
                 ))}
               </div>
 
-              <div className="space-y-3 pt-6 border-t border-border">
+              <div className="border-border space-y-3 border-t pt-6">
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-text-muted">Subtotal</span>
                   {/* <span className="font-semibold">12345</span> */}
@@ -384,10 +449,12 @@ export default function Checkout() {
                   </span>
                 </div>
 
-                <div className="pt-3 border-t border-border">
+                <div className="border-border border-t pt-3">
                   <div className="flex items-center justify-between">
                     <span className="font-semibold">Total</span>
-                    <span className="text-2xl font-bold text-primary">{formatPrice(total)}</span>
+                    <span className="text-primary text-2xl font-bold">
+                      {formatPrice(total)}
+                    </span>
                   </div>
                 </div>
               </div>
